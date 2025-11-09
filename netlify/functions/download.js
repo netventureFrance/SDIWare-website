@@ -6,7 +6,7 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
 );
 
 // File URL on FastComet
-const FILE_URL = 'https://www.sdiware.video/info/SDIWare%20Bundle.2.0.291.exe';
+const FILE_URL = 'https://www.sdiware.video/downloads/SDIWare-Installer.exe';
 
 exports.handler = async (event, context) => {
   // Extract token from URL path
