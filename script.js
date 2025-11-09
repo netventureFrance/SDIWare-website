@@ -300,6 +300,9 @@ function initDownloadForm() {
 
     console.log('Download form initialized');
 
+    // Load saved form data
+    loadSavedFormData();
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         console.log('Form submitted');
@@ -341,11 +344,17 @@ function initDownloadForm() {
             console.log('Response:', result);
 
             if (response.ok) {
+                // Save form data to localStorage (except GDPR consent)
+                saveFormData(data);
+
                 showMessage(
                     result.message || 'Success! Check your email for the download link.',
                     'success'
                 );
-                form.reset();
+
+                // Reset only the checkboxes, keep other fields filled
+                document.getElementById('gdpr-consent').checked = false;
+                document.getElementById('newsletter').checked = false;
             } else {
                 showMessage(
                     result.error || 'An error occurred. Please try again.',
@@ -378,6 +387,53 @@ function initDownloadForm() {
             }, 10000);
         }
     }
+}
+
+// Save form data to localStorage
+function saveFormData(data) {
+    const dataToSave = {
+        fullName: data.fullName,
+        email: data.email,
+        company: data.company,
+        role: data.role,
+        useCase: data.useCase,
+        newsletter: data.newsletter
+        // Note: We don't save GDPR consent - it must be checked each time
+    };
+    localStorage.setItem('sdiware-download-form', JSON.stringify(dataToSave));
+    console.log('Form data saved to localStorage');
+}
+
+// Load saved form data
+function loadSavedFormData() {
+    const savedData = localStorage.getItem('sdiware-download-form');
+    if (!savedData) {
+        console.log('No saved form data found');
+        return;
+    }
+
+    try {
+        const data = JSON.parse(savedData);
+        console.log('Loading saved form data');
+
+        // Fill in the form fields
+        if (data.fullName) document.getElementById('full-name').value = data.fullName;
+        if (data.email) document.getElementById('email').value = data.email;
+        if (data.company) document.getElementById('company').value = data.company;
+        if (data.role) document.getElementById('role').value = data.role;
+        if (data.useCase) document.getElementById('use-case').value = data.useCase;
+        if (data.newsletter) document.getElementById('newsletter').checked = data.newsletter;
+
+        console.log('Form data loaded successfully');
+    } catch (error) {
+        console.error('Error loading saved form data:', error);
+    }
+}
+
+// Function to clear saved form data (optional - can be called from console if needed)
+function clearSavedFormData() {
+    localStorage.removeItem('sdiware-download-form');
+    console.log('Saved form data cleared');
 }
 
 console.log('SDIWare website loaded successfully!');
