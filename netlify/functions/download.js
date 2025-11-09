@@ -172,10 +172,17 @@ function generateErrorPage(message, expired = false) {
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
         }
         .btn:hover {
             background: #00b894;
             transform: translateY(-2px);
+        }
+        button.btn {
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -200,6 +207,31 @@ function generateSuccessPage(message, downloadUrl) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download SDIWare</title>
     <meta http-equiv="refresh" content="2;url=${downloadUrl}">
+    <script>
+        // Start download after 2 seconds
+        setTimeout(function() {
+            window.location.href = '${downloadUrl}';
+        }, 2000);
+
+        // Attempt to close window after 5 seconds (only works if opened via window.open)
+        setTimeout(function() {
+            // Show close message
+            document.getElementById('message').innerHTML = 'Download started! You can close this tab now.';
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('closeBtn').style.display = 'inline-block';
+
+            // Try to auto-close (may not work in all browsers)
+            window.close();
+        }, 5000);
+
+        function closeWindow() {
+            window.close();
+            // If window.close() doesn't work, show message
+            setTimeout(function() {
+                alert('Please close this tab manually using your browser\\'s close button.');
+            }, 500);
+        }
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -247,10 +279,17 @@ function generateSuccessPage(message, downloadUrl) {
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
         }
         .btn:hover {
             background: #00b894;
             transform: translateY(-2px);
+        }
+        button.btn {
+            margin-top: 1rem;
         }
         .spinner {
             margin: 2rem auto;
@@ -271,9 +310,10 @@ function generateSuccessPage(message, downloadUrl) {
     <div class="container">
         <div class="icon">📦</div>
         <h1>Download Ready!</h1>
-        <p>${message}</p>
-        <div class="spinner"></div>
+        <p id="message">${message}</p>
+        <div id="spinner" class="spinner"></div>
         <a href="${downloadUrl}" class="btn">Download SDIWare</a>
+        <button id="closeBtn" onclick="closeWindow()" class="btn" style="display: none; margin-left: 1rem; background: #ff4500;">Close Tab</button>
         <p style="margin-top: 2rem; font-size: 0.875rem; color: #999;">
             Thank you for choosing SDIWare!
         </p>
