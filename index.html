@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>SDIWare - Professional SDI to NDI, IP 2110, WebRTC, SRT Conversion Software</title>
+    <meta name="title" content="SDIWare - Professional SDI to NDI, IP 2110, WebRTC, SRT Conversion Software">
+    <meta name="description" content="Professional video conversion software for broadcast and live production. Convert between SDI, NDI, IP 2110, WebRTC, SRT, and CEF formats with low latency. NDI Certified with support for Blackmagic DeckLink, Magewell, and more.">
+    <meta name="keywords" content="SDI to NDI, NDI converter, IP 2110, WebRTC video, SRT streaming, video conversion software, broadcast software, live production, Blackmagic DeckLink, NDI certified, CEF streaming, professional video converter">
+    <meta name="author" content="SDIWare">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.sdiware.video/">
+
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="en" href="https://www.sdiware.video/">
+    <link rel="alternate" hreflang="de" href="https://www.sdiware.video/">
+    <link rel="alternate" hreflang="fr" href="https://www.sdiware.video/">
+    <link rel="alternate" hreflang="es" href="https://www.sdiware.video/">
+    <link rel="alternate" hreflang="it" href="https://www.sdiware.video/">
+    <link rel="alternate" hreflang="x-default" href="https://www.sdiware.video/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sdiware.video/">
+    <meta property="og:title" content="SDIWare - Professional SDI to NDI, IP 2110, WebRTC, SRT Conversion Software">
+    <meta property="og:description" content="Professional video conversion software for broadcast and live production. Convert between SDI, NDI, IP 2110, WebRTC, SRT, and CEF formats with low latency.">
+    <meta property="og:image" content="https://www.sdiware.video/logo.png">
+    <meta property="og:site_name" content="SDIWare">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.sdiware.video/">
+    <meta name="twitter:title" content="SDIWare - Professional SDI to NDI, IP 2110, WebRTC, SRT Conversion Software">
+    <meta name="twitter:description" content="Professional video conversion software for broadcast and live production. Convert between SDI, NDI, IP 2110, WebRTC, SRT, and CEF formats with low latency.">
+    <meta name="twitter:image" content="https://www.sdiware.video/logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #3d4f5c;
+    --secondary-bg: #2d3e4a;
+    --dark-bg: #1e2a35;
+    --accent-teal: #00d4aa;
+    --accent-orange: #ff4500;
+    --text-white: #ffffff;
+    --text-grey: #cfd8dc; /* Improved from #b0bec5 for better contrast (WCAG AA compliant) */
+    --border-teal: #00d4aa;
+    --card-bg: #344450;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-white);
+    background-color: var(--primary-bg);
+}
+
+/* Accessibility Enhancements */
+
+/* Skip Link - Hidden by default, visible on focus */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-teal);
+    color: var(--dark-bg);
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10000;
+    border-radius: 0 0 4px 0;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid var(--accent-orange);
+    outline-offset: 2px;
+}
+
+/* Screen Reader Only - Visually hidden but accessible to screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus Visible Styles for Better Keyboard Navigation */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+.btn:focus-visible {
+    outline: 3px solid var(--accent-teal);
+    outline-offset: 3px;
+}
+
+/* Remove default focus outline only when focus-visible is supported */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Ensure sufficient touch target sizes (minimum 44x44px) */
+.nav-menu a,
+.btn,
+.lang-dropdown,
+.partner-card {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+.header {
+    background: var(--secondary-bg);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-menu a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-teal);
+}
+
+/* Language Selector */
+.language-selector {
+    position: relative;
+}
+
+.lang-dropdown {
+    background: var(--secondary-bg);
+    border: 2px solid var(--accent-teal);
+    color: var(--text-white);
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d4aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1.2rem;
+    min-width: 170px;
+}
+
+.lang-dropdown:hover {
+    background-color: var(--card-bg);
+    transform: translateY(-2px);
+}
+
+.lang-dropdown:focus {
+    outline: none;
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+}
+
+.lang-dropdown option {
+    background: var(--secondary-bg);
+    color: var(--text-white);
+    padding: 0.5rem;
+}
+
+/* Hero Section */
+.hero {
+    padding: 6rem 0;
+    text-align: center;
+    background: var(--secondary-bg);
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+}
+
+.hero-icon {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+    word-spacing: 0.2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3em;
+}
+
+.hero-title span:empty {
+    display: none !important;
+}
+
+.hero-title span[data-i18n="hero.titleSuffix"]:empty::after {
+    content: none;
+}
+
+.format-text {
+    color: var(--accent-teal);
+    display: inline-block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    min-width: 140px;
+    text-align: center;
+}
+
+.format-text.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.5s ease;
+    color: var(--accent-orange);
+    margin: 0 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-grey);
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.hero-feature {
+    padding: 0.75rem 1.5rem;
+    background: var(--card-bg);
+    border: 2px solid var(--accent-teal);
+    border-radius: 0.5rem;
+}
+
+.feature-label {
+    color: var(--accent-teal);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* NDI Badge */
+.ndi-badge {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.ndi-badge-image {
+    width: 180px;
+    height: auto;
+    filter: brightness(1);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.ndi-badge-image:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.875rem 2.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--accent-teal);
+    color: var(--dark-bg);
+    border-color: var(--accent-teal);
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--accent-teal);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-white);
+    border-color: var(--text-white);
+}
+
+.btn-secondary:hover {
+    background: var(--text-white);
+    color: var(--dark-bg);
+}
+
+/* Features Section */
+.features {
+    padding: 5rem 0;
+    background: var(--primary-bg);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--text-white);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--text-grey);
+    margin-bottom: 3rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.feature-card:hover {
+    border-color: var(--accent-teal);
+    transform: translateY(-5px);
+}
+
+.feature-number {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-teal);
+    opacity: 0.2;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-teal);
+}
+
+.feature-card p {
+    color: var(--text-grey);
+    line-height: 1.7;
+}
+
+/* Use Cases Section */
+.use-cases {
+    padding: 5rem 0;
+    background: var(--secondary-bg);
+}
+
+.use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.use-case-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.use-case-card:hover {
+    border-color: var(--accent-teal);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+}
+
+.use-case-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    filter: grayscale(0.3);
+    transition: filter 0.3s ease;
+}
+
+.use-case-card:hover .use-case-icon {
+    filter: grayscale(0);
+}
+
+.use-case-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-teal);
+    font-weight: 700;
+}
+
+.use-case-card p {
+    color: var(--text-grey);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* Partners Section */
+.partners {
+    padding: 5rem 0;
+    background: var(--primary-bg);
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    align-items: center;
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partner-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    width: 100%;
+    height: 140px;
+    text-decoration: none;
+}
+
+.partner-card:hover {
+    border-color: var(--accent-teal);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+}
+
+.partner-logo {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0.9);
+    transition: filter 0.3s ease;
+}
+
+.partner-card:hover .partner-logo {
+    filter: brightness(1.1);
+}
+
+/* Contact Section */
+.contact {
+    padding: 5rem 0;
+    background: var(--primary-bg);
+    text-align: center;
+}
+
+.contact-text {
+    font-size: 1.125rem;
+    color: var(--text-grey);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+}
+
+.contact-email {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.contact-email a {
+    color: var(--accent-teal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-email a:hover {
+    color: var(--text-white);
+}
+
+/* Impressum Section */
+.impressum {
+    padding: 5rem 0;
+    background: var(--secondary-bg);
+}
+
+.impressum-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 3rem;
+}
+
+.impressum-block h3 {
+    color: var(--accent-teal);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.impressum-block p {
+    color: var(--text-grey);
+    line-height: 1.8;
+}
+
+.impressum-block strong {
+    color: var(--text-white);
+}
+
+.impressum-block a {
+    color: var(--accent-teal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.impressum-block a:hover {
+    color: var(--text-white);
+}
+
+/* Footer */
+.footer {
+    background: var(--dark-bg);
+    padding: 2rem 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.footer-text {
+    color: var(--text-grey);
+    font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .nav-menu {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    .lang-dropdown {
+        min-width: 140px;
+        font-size: 0.875rem;
+        padding: 0.4rem 2rem 0.4rem 0.8rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .format-text {
+        min-width: 110px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .ndi-badge-image {
+        width: 140px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .use-cases-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .impressum-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .language-selector {
+        width: 100%;
+    }
+    
+    .lang-dropdown {
+        width: 100%;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .contact-email {
+        font-size: 1.125rem;
+    }
+
+    .use-cases-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .use-case-icon {
+        font-size: 2.5rem;
+    }
+
+    .partners-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .partner-card {
+        height: 100px;
+    }
+
+    .partner-logo {
+        max-height: 60px;
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content,
+.feature-card,
+.device-card {
+    animation: fadeIn 0.6s ease-out;
+}
+    </style>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "SDIWare",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows, Linux",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+        },
+        "description": "Professional video conversion software for broadcast and live production. Convert between SDI, NDI, IP 2110, WebRTC, SRT, and CEF formats with low latency.",
+        "image": "https://www.sdiware.video/logo.png",
+        "url": "https://www.sdiware.video",
+        "publisher": {
+            "@type": "Organization",
+            "name": "SDIWare",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.sdiware.video/logo.png"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "info@sdiware.video",
+                "contactType": "Customer Service",
+                "availableLanguage": ["en", "de", "fr", "es", "it"]
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Via della Consolata 1bis",
+                "addressLocality": "Torino",
+                "postalCode": "10122",
+                "addressCountry": "IT"
+            }
+        },
+        "featureList": [
+            "Ultra low latency video conversion",
+            "Support for 4K and 8K resolutions",
+            "Multi-channel audio support",
+            "Real-time format conversion between SDI, NDI, IP 2110, WebRTC, SRT, and CEF",
+            "NDI Certified",
+            "Tally light support",
+            "Intercom functionality"
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip Navigation Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="SDIWare Logo" class="logo-icon">
+                    <span class="logo-text">SDIWare</span>
+                </div>
+                <nav class="nav-menu" role="navigation" aria-label="Main navigation">
+                    <a href="#home" data-i18n="nav.home">Home</a>
+                    <a href="#use-cases" data-i18n="nav.useCases">Use Cases</a>
+                    <a href="#partners" data-i18n="nav.partners">Partners</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-selector">
+                        <label for="language-dropdown" class="sr-only">Select Language</label>
+                        <select id="language-dropdown" class="lang-dropdown" aria-label="Language selector">
+                            <option value="de">DE - Deutsch</option>
+                            <option value="en" selected>EN - English</option>
+                            <option value="es">ES - Español</option>
+                            <option value="fr">FR - Français</option>
+                            <option value="it">IT - Italiano</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-logo">
+                        <img src="logo.png" alt="SDIWare - Professional Video Conversion Software" class="hero-icon">
+                    </div>
+                    <h1 class="hero-title">
+                        <span data-i18n="hero.titlePrefix">Professional</span>
+                        <span id="format-left" class="format-text">SDI</span>
+                        <span class="arrow">↔</span>
+                        <span id="format-right" class="format-text">NDI</span>
+                        <span data-i18n="hero.titleSuffix">Conversion</span>
+                    </h1>
+                    <p class="hero-subtitle" data-i18n="hero.subtitle">
+                        Advanced software solution for seamless conversion between SDI and NDI formats
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <span class="feature-label" data-i18n="hero.feature1">Minimal Latency</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="feature-label" data-i18n="hero.feature2">10-bit HDR</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="feature-label" data-i18n="hero.feature3">Alpha Channel</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="feature-label" data-i18n="hero.feature4">Multi-Audio</span>
+                        </div>
+                        <div class="hero-feature">
+                            <span class="feature-label" data-i18n="hero.feature5">Intercom</span>
+                        </div>
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn btn-primary" data-i18n="hero.cta1">Download</a>
+                        <a href="#features" class="btn btn-secondary" data-i18n="hero.cta2">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title" data-i18n="features.title">Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-number">01</div>
+                        <h3 data-i18n="features.latency.title">Ultra-Low Latency</h3>
+                        <p data-i18n="features.latency.desc">
+                            Real-time conversion with minimal delay, perfect for live production environments
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">02</div>
+                        <h3 data-i18n="features.alpha.title">Alpha Channel Support</h3>
+                        <p data-i18n="features.alpha.desc">
+                            Full transparency support for professional graphics and overlay workflows
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">03</div>
+                        <h3 data-i18n="features.hdr.title">10-bit HDR</h3>
+                        <p data-i18n="features.hdr.desc">
+                            High Dynamic Range with 10-bit color depth for superior image quality
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">04</div>
+                        <h3 data-i18n="features.audio.title">Multi-Channel Audio</h3>
+                        <p data-i18n="features.audio.desc">
+                            Comprehensive audio support for complex broadcast scenarios
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">05</div>
+                        <h3 data-i18n="features.tally.title">Tally Integration</h3>
+                        <p data-i18n="features.tally.desc">
+                            Built-in tally features for seamless production workflow integration
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">06</div>
+                        <h3 data-i18n="features.preview.title">Program & Preview</h3>
+                        <p data-i18n="features.preview.desc">
+                            Dual signal handling for both program and preview feeds
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">07</div>
+                        <h3 data-i18n="features.cef_webrtc.title">CEF & WebRTC</h3>
+                        <p data-i18n="features.cef_webrtc.desc">
+                            Decode any Chromium Embedded Framework HTML renderer or website to a live broadcast signal (fill & key). Send video input back to the HTML renderer via WebRTC
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="use-cases" class="use-cases">
+            <div class="container">
+                <h2 class="section-title" data-i18n="useCases.title">Use Cases</h2>
+                <p class="section-subtitle" data-i18n="useCases.subtitle">SDIWare adapts to your production environment</p>
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <div class="use-case-icon" aria-hidden="true">📺</div>
+                        <h3 data-i18n="useCases.studio.title">Live Studio Production</h3>
+                        <p data-i18n="useCases.studio.desc">Perfect for broadcast studios requiring reliable SDI to NDI conversion for multi-camera productions and live switching</p>
+                    </div>
+                    <div class="use-case-card">
+                        <div class="use-case-icon" aria-hidden="true">🚐</div>
+                        <h3 data-i18n="useCases.broadcast.title">Outside Broadcast Production</h3>
+                        <p data-i18n="useCases.broadcast.desc">Designed for mobile production units and OB vans, enabling seamless integration of traditional SDI equipment with modern NDI workflows</p>
+                    </div>
+                    <div class="use-case-card">
+                        <div class="use-case-icon" aria-hidden="true">🎤</div>
+                        <h3 data-i18n="useCases.corporate.title">Live Corporate Event</h3>
+                        <p data-i18n="useCases.corporate.desc">Ideal for corporate events, conferences, and presentations requiring professional broadcast quality with flexible connectivity</p>
+                    </div>
+                    <div class="use-case-card">
+                        <div class="use-case-icon" aria-hidden="true">☁️</div>
+                        <h3 data-i18n="useCases.remote.title">Remote and Cloud Production</h3>
+                        <p data-i18n="useCases.remote.desc">Enable distributed production workflows with IP-based video delivery for remote operators and cloud-based production environments</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="partners" class="partners">
+            <div class="container">
+                <h2 class="section-title" data-i18n="partners.title">Technology Partners</h2>
+                <p class="section-subtitle" data-i18n="partners.subtitle">Trusted integrations with industry-leading platforms</p>
+                <div class="partners-grid">
+                    <a href="https://ndi.video" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="NDI-Certified-Badge.webp" alt="NDI Certified - Network Device Interface Technology Partner" class="partner-logo">
+                    </a>
+                    <a href="https://beta.spx.graphics" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="images/spx-logo.png" alt="SPX Graphics" class="partner-logo">
+                    </a>
+                    <a href="https://ograf.ebu.io" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="images/ograf-logo.svg" alt="Ograf" class="partner-logo">
+                    </a>
+                    <a href="https://mmgaxis.io" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="images/mmg-axis-logo.png" alt="MMG Axis" class="partner-logo">
+                    </a>
+                    <a href="https://www.blackmagicdesign.com/products/decklink" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="images/blackmagic-logo.svg" alt="Blackmagic Design" class="partner-logo">
+                    </a>
+                    <a href="https://www.magewell.com/capture/pro-capture" target="_blank" rel="noopener noreferrer" class="partner-card">
+                        <img src="images/magewell-logo.png" alt="Magewell" class="partner-logo">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title" data-i18n="contact.title">Get in Touch</h2>
+                <p class="contact-text" data-i18n="contact.text">
+                    Interested in SDIWare? Contact us for licensing, support, or more information.
+                </p>
+                <div class="contact-info">
+                    <p class="contact-email"><a href="mailto:info@sdiware.video">info@sdiware.video</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impressum" class="impressum">
+            <div class="container">
+                <h2 class="section-title" data-i18n="impressum.title">Impressum</h2>
+                <div class="impressum-content">
+                    <div class="impressum-block">
+                        <h3 data-i18n="impressum.company">Company Information</h3>
+                        <p>
+                            <strong>netventure r&d SRL</strong><br>
+                            <span data-i18n="impressum.legal_form">Società a Responsabilità Limitata</span><br>
+                            <br>
+                            <strong data-i18n="impressum.managing_director">Managing Director:</strong> Antonio Bleile<br>
+                            <br>
+                            <strong data-i18n="impressum.registered_office">Registered Office:</strong><br>
+                            Via della Consolata 1bis<br>
+                            I-10122 Torino, Italia
+                        </p>
+                    </div>
+                    <div class="impressum-block">
+                        <h3 data-i18n="impressum.contact_heading">Contact</h3>
+                        <p>
+                            <strong data-i18n="impressum.email_label">Email:</strong> <a href="mailto:info@sdiware.video">info@sdiware.video</a>
+                        </p>
+                    </div>
+                    <div class="impressum-block">
+                        <h3 data-i18n="impressum.legal">Legal Information</h3>
+                        <p>
+                            <strong data-i18n="impressum.vat">VAT Number / P.IVA:</strong> IT02928780218<br>
+                            <strong data-i18n="impressum.rea">REA Number:</strong> TO-02928780218<br>
+                            <strong data-i18n="impressum.single_shareholder">Single Shareholder Company:</strong> <span data-i18n="impressum.no">No</span>
+                        </p>
+                    </div>
+                    <div class="impressum-block">
+                        <h3 data-i18n="impressum.disclaimer">Disclaimer</h3>
+                        <p data-i18n="impressum.disclaimer_text">
+                            The content of this website has been created with the greatest possible care. However, we cannot guarantee the accuracy, completeness and timeliness of the content.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="SDIWare - Professional Broadcast Video Conversion" class="footer-icon">
+                </div>
+                <p class="footer-text">© 2025 netventure</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

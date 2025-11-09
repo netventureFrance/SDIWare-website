@@ -1,0 +1,290 @@
+// SDIWare Website - Main JavaScript
+
+// Current language
+let currentLang = 'en';
+
+// Format rotation configuration (using translation keys)
+const formatPairs = [
+    ['sdi', 'ndi'],
+    ['ndi', 'sdi'],
+    ['ip2110', 'webrtc'],
+    ['webrtc', 'ip2110'],
+    ['sdi', 'srt'],
+    ['srt', 'sdi'],
+    ['ip2110', 'cef'],
+    ['cef', 'ip2110'],
+    ['ndi', 'webrtc'],
+    ['webrtc', 'ndi']
+];
+
+let currentFormatIndex = 0;
+let rotationInterval = null;
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('=== SDIWare Initialization ===');
+    console.log('Translations available:', typeof translations !== 'undefined');
+    console.log('Available languages:', translations ? Object.keys(translations) : 'none');
+
+    initLanguageSwitcher();
+    initSmoothScrolling();
+    initAnimations();
+    initFormatRotation();
+
+    // Check for saved language preference and apply AFTER initialization
+    const savedLang = localStorage.getItem('sdiware-lang');
+    const langToLoad = (savedLang && translations && translations[savedLang]) ? savedLang : 'en';
+
+    console.log('Loading language:', langToLoad);
+    const langDropdown = document.getElementById('language-dropdown');
+    if (langDropdown) {
+        langDropdown.value = langToLoad;
+    }
+    switchLanguage(langToLoad);
+});
+
+// Language Switcher
+function initLanguageSwitcher() {
+    const langDropdown = document.getElementById('language-dropdown');
+    
+    if (langDropdown) {
+        console.log('Language dropdown found');
+        langDropdown.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            console.log('Language changed to:', lang);
+            switchLanguage(lang);
+        });
+    } else {
+        console.error('Language dropdown not found!');
+    }
+}
+
+function switchLanguage(lang) {
+    console.log('Switching to language:', lang);
+
+    if (!translations || !translations[lang]) {
+        console.error('Translation not found for:', lang);
+        return;
+    }
+
+    currentLang = lang;
+
+    // Update HTML lang attribute for accessibility
+    document.documentElement.lang = lang;
+
+    // Update dropdown value
+    const langDropdown = document.getElementById('language-dropdown');
+    if (langDropdown) {
+        langDropdown.value = lang;
+    }
+
+    // Update all translated elements
+    let translatedCount = 0;
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = getNestedTranslation(translations[lang], key);
+
+        // Check for undefined/null, but allow empty strings
+        if (translation !== undefined && translation !== null) {
+            element.textContent = translation;
+            translatedCount++;
+
+            // Special logging for titleSuffix
+            if (key === 'hero.titleSuffix') {
+                console.log(`Title suffix set to: "${translation}" (length: ${translation.length})`);
+            }
+        } else {
+            console.warn('Translation missing for key:', key);
+        }
+    });
+
+    // Update format text with current language
+    updateFormatText();
+
+    console.log('Translated', translatedCount, 'elements');
+
+    // Save language preference
+    localStorage.setItem('sdiware-lang', lang);
+}
+
+function getNestedTranslation(obj, path) {
+    return path.split('.').reduce((current, key) => current?.[key], obj);
+}
+
+// Smooth Scrolling
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Active Navigation
+function highlightNavOnScroll() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const scrollY = window.pageYOffset;
+
+    sections.forEach(section => {
+        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.offsetTop - 100;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.style.color = 'var(--accent-teal)';
+                }
+            });
+        }
+    });
+}
+
+window.addEventListener('scroll', highlightNavOnScroll);
+
+// Animations
+function initAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe feature cards
+    document.querySelectorAll('.feature-card, .device-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
+    });
+}
+
+// Navbar hide on scroll down (mobile)
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    const currentScroll = window.pageYOffset;
+    
+    if (window.innerWidth <= 768) {
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
+        }
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// Keyboard navigation for language selector
+document.addEventListener('keydown', (e) => {
+    if (e.key >= '1' && e.key <= '5') {
+        const langs = ['en', 'fr', 'de', 'es', 'it'];
+        const index = parseInt(e.key) - 1;
+        if (langs[index]) {
+            switchLanguage(langs[index]);
+        }
+    }
+});
+
+// Helper function to get translated format name
+function getFormatTranslation(formatKey) {
+    if (!translations || !translations[currentLang]) {
+        return formatKey;
+    }
+    return translations[currentLang].formats[formatKey] || formatKey;
+}
+
+// Helper function to update format text
+function updateFormatText() {
+    const formatLeft = document.getElementById('format-left');
+    const formatRight = document.getElementById('format-right');
+
+    if (!formatLeft || !formatRight) {
+        console.warn('updateFormatText: Elements not found');
+        return;
+    }
+
+    const [leftKey, rightKey] = formatPairs[currentFormatIndex];
+    const leftText = getFormatTranslation(leftKey);
+    const rightText = getFormatTranslation(rightKey);
+
+    console.log(`Setting format text: ${leftText} ↔ ${rightText} (lang: ${currentLang})`);
+
+    formatLeft.textContent = leftText;
+    formatRight.textContent = rightText;
+}
+
+// Format rotation for hero title
+function initFormatRotation() {
+    console.log('=== Initializing Format Rotation ===');
+
+    const formatLeft = document.getElementById('format-left');
+    const formatRight = document.getElementById('format-right');
+
+    console.log('Format left element:', formatLeft);
+    console.log('Format right element:', formatRight);
+
+    if (!formatLeft || !formatRight) {
+        console.error('Format elements not found!');
+        return;
+    }
+
+    console.log('Format rotation starting...');
+    console.log('Format pairs:', formatPairs);
+
+    // Set initial text
+    updateFormatText();
+    console.log('Initial format text set');
+
+    // Clear any existing interval
+    if (rotationInterval) {
+        clearInterval(rotationInterval);
+        console.log('Cleared existing interval');
+    }
+
+    // Start rotation
+    rotationInterval = setInterval(() => {
+        console.log('=== Rotation tick at', new Date().toLocaleTimeString(), '===');
+
+        // Fade out
+        formatLeft.classList.add('fade-out');
+        formatRight.classList.add('fade-out');
+        console.log('Fading out...');
+
+        // Update text after fade out
+        setTimeout(() => {
+            currentFormatIndex = (currentFormatIndex + 1) % formatPairs.length;
+            console.log('New index:', currentFormatIndex);
+
+            updateFormatText();
+            console.log('Format text updated');
+
+            // Fade in
+            formatLeft.classList.remove('fade-out');
+            formatRight.classList.remove('fade-out');
+            console.log('Fading in...');
+        }, 300);
+    }, 5000);
+
+    console.log('Rotation interval set (ID:', rotationInterval, ')');
+}
+
+console.log('SDIWare website loaded successfully!');
