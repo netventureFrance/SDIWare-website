@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScrolling();
     initAnimations();
     initFormatRotation();
+    initUICarousel();
     initDownloadForm();
 
     // Check for saved language preference and apply AFTER initialization
@@ -286,6 +287,47 @@ function initFormatRotation() {
     }, 5000);
 
     console.log('Rotation interval set (ID:', rotationInterval, ')');
+}
+
+// UI Carousel for hero section screenshots
+let currentUIIndex = 0;
+let uiCarouselInterval = null;
+
+function initUICarousel() {
+    console.log('=== Initializing UI Carousel ===');
+
+    const uiImages = document.querySelectorAll('.hero-ui-image');
+
+    if (!uiImages || uiImages.length === 0) {
+        console.log('No UI images found, skipping carousel');
+        return;
+    }
+
+    console.log('Found', uiImages.length, 'UI images');
+
+    // Clear any existing interval
+    if (uiCarouselInterval) {
+        clearInterval(uiCarouselInterval);
+    }
+
+    // Start carousel - change image every 10 seconds
+    uiCarouselInterval = setInterval(() => {
+        console.log('=== UI Carousel tick at', new Date().toLocaleTimeString(), '===');
+
+        // Remove active class from current image
+        uiImages[currentUIIndex].classList.remove('active');
+        console.log('Hiding image', currentUIIndex);
+
+        // Move to next image
+        currentUIIndex = (currentUIIndex + 1) % uiImages.length;
+        console.log('Showing image', currentUIIndex);
+
+        // Add active class to new image
+        uiImages[currentUIIndex].classList.add('active');
+
+    }, 10000); // 10 seconds
+
+    console.log('UI Carousel started (ID:', uiCarouselInterval, ')');
 }
 
 // Download form handling

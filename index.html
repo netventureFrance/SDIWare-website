@@ -238,16 +238,36 @@ select:focus:not(:focus-visible) {
     background: var(--secondary-bg);
 }
 
-.hero-logo {
-    margin-bottom: 2rem;
+.hero-ui-showcase {
+    margin-bottom: 3rem;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 3px solid var(--accent-teal);
 }
 
-.hero-icon {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto;
-    display: block;
+.hero-ui-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    background: var(--card-bg);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    padding: 1rem;
+}
+
+.hero-ui-image.active {
+    opacity: 1;
+    z-index: 1;
 }
 
 .hero-title {
@@ -852,6 +872,11 @@ select:focus:not(:focus-visible) {
         padding: 0.4rem 2rem 0.4rem 0.8rem;
     }
 
+    .hero-ui-showcase {
+        height: 300px;
+        max-width: 100%;
+    }
+
     .hero-title {
         font-size: 2rem;
     }
@@ -1059,8 +1084,11 @@ html {
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <div class="hero-logo">
-                        <img src="logo.png" alt="SDIWare - Professional Video Conversion Software" class="hero-icon">
+                    <div class="hero-ui-showcase">
+                        <img src="images/sdiware-ui.png" alt="SDIWare User Interface" class="hero-ui-image active" data-ui-index="0">
+                        <img src="images/sdiware-ui-ndi-decoder.png" alt="SDIWare NDI Decoder" class="hero-ui-image" data-ui-index="1">
+                        <img src="images/sdiware-ui-sdi-encode.png" alt="SDIWare SDI Encoder" class="hero-ui-image" data-ui-index="2">
+                        <img src="images/sdiware-ui-web-decode.png" alt="SDIWare Web Decoder" class="hero-ui-image" data-ui-index="3">
                     </div>
                     <h1 class="hero-title">
                         <span data-i18n="hero.titlePrefix">Professional</span>
