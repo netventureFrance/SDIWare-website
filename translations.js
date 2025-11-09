@@ -7,6 +7,7 @@ const translations = {
             contact: "Contact",
             useCases: "Use Cases",
             partners: "Partners",
+            download: "Download",
             impressum: "Impressum"
         },
         hero: {
@@ -84,6 +85,40 @@ const translations = {
             title: "Technology Partners",
             subtitle: "Trusted integrations with industry-leading platforms"
         },
+        download: {
+            title: "Download SDIWare",
+            subtitle: "Request your free 48-hour trial download link",
+            form: {
+                name: "Full Name",
+                email: "Email Address",
+                company: "Company Name",
+                role: "Your Role",
+                useCase: "Intended Use Case",
+                selectOption: "-- Select an option --",
+                liveStudio: "Live Studio Production",
+                obVan: "Outside Broadcast / OB Van",
+                corporateEvents: "Corporate Events",
+                remoteProduction: "Remote/Cloud Production",
+                other: "Other",
+                gdprConsent: "I agree to the processing of my personal data and accept the privacy policy",
+                newsletter: "I would like to receive updates about SDIWare (optional)",
+                submit: "Request Download Link"
+            },
+            info: {
+                trial: {
+                    title: "48-Hour Trial",
+                    desc: "Full-featured trial version with no limitations. Perfect for testing in your production environment."
+                },
+                instant: {
+                    title: "Instant Access",
+                    desc: "Receive your download link via email within minutes. No credit card required."
+                },
+                support: {
+                    title: "Support Included",
+                    desc: "Get technical support during your trial period to ensure smooth setup and operation."
+                }
+            }
+        },
         contact: {
             title: "Get in Touch",
             text: "Interested in SDIWare? Contact us for licensing, support, or more information."
@@ -116,6 +151,7 @@ const translations = {
             contact: "Contact",
             useCases: "Cas d'Usage",
             partners: "Partenaires",
+            download: "Télécharger",
             impressum: "Mentions Légales"
         },
         hero: {
@@ -193,6 +229,40 @@ const translations = {
             title: "Partenaires Technologiques",
             subtitle: "Intégrations de confiance avec des plateformes leaders de l'industrie"
         },
+        download: {
+            title: "Télécharger SDIWare",
+            subtitle: "Demandez votre lien de téléchargement d'essai gratuit de 48 heures",
+            form: {
+                name: "Nom Complet",
+                email: "Adresse E-mail",
+                company: "Nom de l'Entreprise",
+                role: "Votre Rôle",
+                useCase: "Cas d'Usage Prévu",
+                selectOption: "-- Sélectionnez une option --",
+                liveStudio: "Production Studio en Direct",
+                obVan: "Production Extérieure / Car Régie",
+                corporateEvents: "Événements d'Entreprise",
+                remoteProduction: "Production Distante/Cloud",
+                other: "Autre",
+                gdprConsent: "J'accepte le traitement de mes données personnelles et accepte la politique de confidentialité",
+                newsletter: "Je souhaite recevoir des mises à jour sur SDIWare (optionnel)",
+                submit: "Demander le Lien de Téléchargement"
+            },
+            info: {
+                trial: {
+                    title: "Essai de 48 Heures",
+                    desc: "Version d'essai complète sans limitations. Parfait pour tester dans votre environnement de production."
+                },
+                instant: {
+                    title: "Accès Instantané",
+                    desc: "Recevez votre lien de téléchargement par e-mail en quelques minutes. Aucune carte de crédit requise."
+                },
+                support: {
+                    title: "Support Inclus",
+                    desc: "Bénéficiez d'un support technique pendant votre période d'essai pour garantir une installation et un fonctionnement fluides."
+                }
+            }
+        },
         contact: {
             title: "Contactez-nous",
             text: "Intéressé par SDIWare ? Contactez-nous pour les licences, le support ou plus d'informations."
@@ -225,6 +295,7 @@ const translations = {
             contact: "Kontakt",
             useCases: "Anwendungsfälle",
             partners: "Partner",
+            download: "Herunterladen",
             impressum: "Impressum"
         },
         hero: {
@@ -302,6 +373,40 @@ const translations = {
             title: "Technologiepartner",
             subtitle: "Vertrauenswürdige Integrationen mit branchenführenden Plattformen"
         },
+        download: {
+            title: "SDIWare Herunterladen",
+            subtitle: "Fordern Sie Ihren kostenlosen 48-Stunden-Test-Download-Link an",
+            form: {
+                name: "Vollständiger Name",
+                email: "E-Mail-Adresse",
+                company: "Firmenname",
+                role: "Ihre Rolle",
+                useCase: "Beabsichtigter Anwendungsfall",
+                selectOption: "-- Bitte wählen --",
+                liveStudio: "Live-Studioproduktion",
+                obVan: "Außenübertragung / ÜWagen",
+                corporateEvents: "Corporate Events",
+                remoteProduction: "Remote-/Cloud-Produktion",
+                other: "Sonstiges",
+                gdprConsent: "Ich stimme der Verarbeitung meiner personenbezogenen Daten zu und akzeptiere die Datenschutzerklärung",
+                newsletter: "Ich möchte Updates über SDIWare erhalten (optional)",
+                submit: "Download-Link Anfordern"
+            },
+            info: {
+                trial: {
+                    title: "48-Stunden-Test",
+                    desc: "Voll funktionsfähige Testversion ohne Einschränkungen. Perfekt zum Testen in Ihrer Produktionsumgebung."
+                },
+                instant: {
+                    title: "Sofortiger Zugang",
+                    desc: "Erhalten Sie Ihren Download-Link innerhalb weniger Minuten per E-Mail. Keine Kreditkarte erforderlich."
+                },
+                support: {
+                    title: "Support Inklusive",
+                    desc: "Erhalten Sie technischen Support während Ihrer Testphase für eine reibungslose Einrichtung und Betrieb."
+                }
+            }
+        },
         contact: {
             title: "Kontaktieren Sie Uns",
             text: "Interessiert an SDIWare? Kontaktieren Sie uns für Lizenzen, Support oder weitere Informationen."
@@ -334,6 +439,7 @@ const translations = {
             contact: "Contacto",
             useCases: "Casos de Uso",
             partners: "Socios",
+            download: "Descargar",
             impressum: "Aviso Legal"
         },
         hero: {
@@ -411,6 +517,40 @@ const translations = {
             title: "Socios Tecnológicos",
             subtitle: "Integraciones confiables con plataformas líderes de la industria"
         },
+        download: {
+            title: "Descargar SDIWare",
+            subtitle: "Solicite su enlace de descarga de prueba gratuito de 48 horas",
+            form: {
+                name: "Nombre Completo",
+                email: "Correo Electrónico",
+                company: "Nombre de la Empresa",
+                role: "Su Función",
+                useCase: "Caso de Uso Previsto",
+                selectOption: "-- Seleccione una opción --",
+                liveStudio: "Producción de Estudio en Vivo",
+                obVan: "Producción Externa / Unidad Móvil",
+                corporateEvents: "Eventos Corporativos",
+                remoteProduction: "Producción Remota/en la Nube",
+                other: "Otro",
+                gdprConsent: "Acepto el procesamiento de mis datos personales y acepto la política de privacidad",
+                newsletter: "Me gustaría recibir actualizaciones sobre SDIWare (opcional)",
+                submit: "Solicitar Enlace de Descarga"
+            },
+            info: {
+                trial: {
+                    title: "Prueba de 48 Horas",
+                    desc: "Versión de prueba completa sin limitaciones. Perfecto para probar en su entorno de producción."
+                },
+                instant: {
+                    title: "Acceso Instantáneo",
+                    desc: "Reciba su enlace de descarga por correo electrónico en minutos. No se requiere tarjeta de crédito."
+                },
+                support: {
+                    title: "Soporte Incluido",
+                    desc: "Obtenga soporte técnico durante su período de prueba para garantizar una configuración y operación fluidas."
+                }
+            }
+        },
         contact: {
             title: "Póngase en Contacto",
             text: "¿Interesado en SDIWare? Contáctenos para licencias, soporte o más información."
@@ -443,6 +583,7 @@ const translations = {
             contact: "Contatti",
             useCases: "Casi d'Uso",
             partners: "Partner",
+            download: "Scarica",
             impressum: "Informazioni Legali"
         },
         hero: {
@@ -519,6 +660,40 @@ const translations = {
         partners: {
             title: "Partner Tecnologici",
             subtitle: "Integrazioni affidabili con piattaforme leader del settore"
+        },
+        download: {
+            title: "Scarica SDIWare",
+            subtitle: "Richiedi il tuo link di download di prova gratuito di 48 ore",
+            form: {
+                name: "Nome Completo",
+                email: "Indirizzo Email",
+                company: "Nome dell'Azienda",
+                role: "Il Tuo Ruolo",
+                useCase: "Caso d'Uso Previsto",
+                selectOption: "-- Seleziona un'opzione --",
+                liveStudio: "Produzione Studio in Diretta",
+                obVan: "Produzione Esterna / Unità Mobile",
+                corporateEvents: "Eventi Aziendali",
+                remoteProduction: "Produzione Remota/Cloud",
+                other: "Altro",
+                gdprConsent: "Accetto il trattamento dei miei dati personali e accetto l'informativa sulla privacy",
+                newsletter: "Vorrei ricevere aggiornamenti su SDIWare (opzionale)",
+                submit: "Richiedi Link di Download"
+            },
+            info: {
+                trial: {
+                    title: "Prova di 48 Ore",
+                    desc: "Versione di prova completa senza limitazioni. Perfetta per testare nel tuo ambiente di produzione."
+                },
+                instant: {
+                    title: "Accesso Istantaneo",
+                    desc: "Ricevi il tuo link di download via email in pochi minuti. Nessuna carta di credito richiesta."
+                },
+                support: {
+                    title: "Supporto Incluso",
+                    desc: "Ottieni supporto tecnico durante il periodo di prova per garantire un'installazione e un funzionamento senza problemi."
+                }
+            }
         },
         contact: {
             title: "Contattaci",

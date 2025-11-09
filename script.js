@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScrolling();
     initAnimations();
     initFormatRotation();
+    initDownloadForm();
 
     // Check for saved language preference and apply AFTER initialization
     const savedLang = localStorage.getItem('sdiware-lang');
@@ -285,6 +286,98 @@ function initFormatRotation() {
     }, 5000);
 
     console.log('Rotation interval set (ID:', rotationInterval, ')');
+}
+
+// Download form handling
+function initDownloadForm() {
+    const form = document.getElementById('download-form');
+    const messageEl = document.getElementById('form-message');
+
+    if (!form) {
+        console.log('Download form not found, skipping initialization');
+        return;
+    }
+
+    console.log('Download form initialized');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log('Form submitted');
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+            fullName: formData.get('fullName'),
+            email: formData.get('email'),
+            company: formData.get('company'),
+            role: formData.get('role'),
+            useCase: formData.get('useCase'),
+            gdprConsent: formData.get('gdprConsent') === 'on',
+            newsletter: formData.get('newsletter') === 'on',
+        };
+
+        console.log('Form data:', data);
+
+        // Show loading message
+        showMessage('Submitting your request...', 'loading');
+
+        // Disable submit button
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Please wait...';
+
+        try {
+            // Call Netlify function
+            const response = await fetch('/.netlify/functions/request-download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            console.log('Response:', result);
+
+            if (response.ok) {
+                showMessage(
+                    result.message || 'Success! Check your email for the download link.',
+                    'success'
+                );
+                form.reset();
+            } else {
+                showMessage(
+                    result.error || 'An error occurred. Please try again.',
+                    'error'
+                );
+            }
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showMessage(
+                'Network error. Please check your connection and try again.',
+                'error'
+            );
+        } finally {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
+
+    function showMessage(text, type) {
+        messageEl.textContent = text;
+        messageEl.className = `form-message ${type}`;
+        messageEl.style.display = 'block';
+
+        // Auto-hide after 10 seconds for success/error messages
+        if (type !== 'loading') {
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 10000);
+        }
+    }
 }
 
 console.log('SDIWare website loaded successfully!');

@@ -1,0 +1,16 @@
+{
+  "name": "sdiware-website",
+  "version": "1.0.0",
+  "description": "SDIWare website with download functionality",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "airtable": "^0.12.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

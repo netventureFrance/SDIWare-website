@@ -547,6 +547,185 @@ select:focus:not(:focus-visible) {
     filter: brightness(1.1);
 }
 
+/* Download Section */
+.download {
+    padding: 5rem 0;
+    background: var(--secondary-bg);
+}
+
+.download-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+}
+
+.download-form-container {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.download-form-container:focus-within {
+    border-color: var(--accent-teal);
+}
+
+.download-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: var(--text-white);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group select {
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--secondary-bg);
+    border-radius: 0.375rem;
+    background: var(--secondary-bg);
+    color: var(--text-white);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-teal);
+    background: var(--dark-bg);
+}
+
+.form-group input::placeholder {
+    color: var(--text-grey);
+    opacity: 0.6;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d4aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1.2rem;
+    padding-right: 2.5rem;
+}
+
+.checkbox-group {
+    margin-top: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.2rem;
+    cursor: pointer;
+    accent-color: var(--accent-teal);
+    flex-shrink: 0;
+}
+
+.checkbox-label span {
+    color: var(--text-grey);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.form-actions {
+    margin-top: 1rem;
+}
+
+.form-actions .btn {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem 2rem;
+}
+
+.form-message {
+    padding: 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-align: center;
+    display: none;
+    margin-top: 1rem;
+}
+
+.form-message.success {
+    display: block;
+    background: rgba(0, 212, 170, 0.15);
+    border: 2px solid var(--accent-teal);
+    color: var(--accent-teal);
+}
+
+.form-message.error {
+    display: block;
+    background: rgba(255, 69, 0, 0.15);
+    border: 2px solid var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+.form-message.loading {
+    display: block;
+    background: var(--secondary-bg);
+    border: 2px solid var(--text-grey);
+    color: var(--text-grey);
+}
+
+.download-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    border-color: var(--accent-teal);
+    transform: translateX(5px);
+}
+
+.info-card h3 {
+    color: var(--accent-teal);
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.info-card p {
+    color: var(--text-grey);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
 /* Contact Section */
 .contact {
     padding: 5rem 0;
@@ -715,6 +894,11 @@ select:focus:not(:focus-visible) {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    .download-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -853,6 +1037,7 @@ html {
                     <a href="#home" data-i18n="nav.home">Home</a>
                     <a href="#use-cases" data-i18n="nav.useCases">Use Cases</a>
                     <a href="#partners" data-i18n="nav.partners">Partners</a>
+                    <a href="#download" data-i18n="nav.download">Download</a>
                 </nav>
                 <div class="header-actions">
                     <div class="language-selector">
@@ -1021,6 +1206,86 @@ html {
                     <a href="https://www.magewell.com/capture/pro-capture" target="_blank" rel="noopener noreferrer" class="partner-card">
                         <img src="images/magewell-logo.png" alt="Magewell" class="partner-logo">
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2 class="section-title" data-i18n="download.title">Download SDIWare</h2>
+                <p class="section-subtitle" data-i18n="download.subtitle">Request your free 48-hour trial download link</p>
+
+                <div class="download-content">
+                    <div class="download-form-container">
+                        <form id="download-form" class="download-form">
+                            <div class="form-group">
+                                <label for="full-name" data-i18n="download.form.name">Full Name</label>
+                                <input type="text" id="full-name" name="fullName" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" data-i18n="download.form.email">Email Address</label>
+                                <input type="email" id="email" name="email" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company" data-i18n="download.form.company">Company Name</label>
+                                <input type="text" id="company" name="company" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" data-i18n="download.form.role">Your Role</label>
+                                <input type="text" id="role" name="role" placeholder="e.g., Broadcast Engineer, Production Manager">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="use-case" data-i18n="download.form.useCase">Intended Use Case</label>
+                                <select id="use-case" name="useCase" required aria-required="true">
+                                    <option value="" data-i18n="download.form.selectOption">-- Select an option --</option>
+                                    <option value="live-studio" data-i18n="download.form.liveStudio">Live Studio Production</option>
+                                    <option value="ob-van" data-i18n="download.form.obVan">Outside Broadcast / OB Van</option>
+                                    <option value="corporate-events" data-i18n="download.form.corporateEvents">Corporate Events</option>
+                                    <option value="remote-production" data-i18n="download.form.remoteProduction">Remote/Cloud Production</option>
+                                    <option value="other" data-i18n="download.form.other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="gdpr-consent" name="gdprConsent" required aria-required="true">
+                                    <span data-i18n="download.form.gdprConsent">I agree to the processing of my personal data and accept the privacy policy</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="newsletter" name="newsletter">
+                                    <span data-i18n="download.form.newsletter">I would like to receive updates about SDIWare (optional)</span>
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" data-i18n="download.form.submit">Request Download Link</button>
+                            </div>
+
+                            <div id="form-message" class="form-message" role="alert" aria-live="polite"></div>
+                        </form>
+                    </div>
+
+                    <div class="download-info">
+                        <div class="info-card">
+                            <h3 data-i18n="download.info.trial.title">48-Hour Trial</h3>
+                            <p data-i18n="download.info.trial.desc">Full-featured trial version with no limitations. Perfect for testing in your production environment.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3 data-i18n="download.info.instant.title">Instant Access</h3>
+                            <p data-i18n="download.info.instant.desc">Receive your download link via email within minutes. No credit card required.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3 data-i18n="download.info.support.title">Support Included</h3>
+                            <p data-i18n="download.info.support.desc">Get technical support during your trial period to ensure smooth setup and operation.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
