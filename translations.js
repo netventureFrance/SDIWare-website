@@ -87,7 +87,7 @@ const translations = {
         },
         download: {
             title: "Download SDIWare",
-            subtitle: "Request your free 48-hour trial download link",
+            subtitle: "Request your 30-day trial (download link valid for 48 hours)",
             pdfTitle: "Product Information",
             pdfDesc: "Download our detailed presentation to learn more about SDIWare features and specifications",
             pdfButton: "Download PDF",
@@ -109,7 +109,7 @@ const translations = {
             },
             info: {
                 trial: {
-                    title: "48-Hour Trial",
+                    title: "30-Day Trial",
                     desc: "Full-featured trial version with no limitations. Perfect for testing in your production environment."
                 },
                 instant: {
@@ -234,7 +234,7 @@ const translations = {
         },
         download: {
             title: "Télécharger SDIWare",
-            subtitle: "Demandez votre lien de téléchargement d'essai gratuit de 48 heures",
+            subtitle: "Demandez votre essai de 30 jours (lien de téléchargement valide 48 heures)",
             pdfTitle: "Informations Produit",
             pdfDesc: "Téléchargez notre présentation détaillée pour en savoir plus sur les fonctionnalités et spécifications de SDIWare",
             pdfButton: "Télécharger PDF",
@@ -256,7 +256,7 @@ const translations = {
             },
             info: {
                 trial: {
-                    title: "Essai de 48 Heures",
+                    title: "Essai de 30 Jours",
                     desc: "Version d'essai complète sans limitations. Parfait pour tester dans votre environnement de production."
                 },
                 instant: {
@@ -381,7 +381,7 @@ const translations = {
         },
         download: {
             title: "SDIWare Herunterladen",
-            subtitle: "Fordern Sie Ihren kostenlosen 48-Stunden-Test-Download-Link an",
+            subtitle: "Fordern Sie Ihre 30-Tage-Testversion an (Download-Link 48 Stunden gültig)",
             pdfTitle: "Produktinformationen",
             pdfDesc: "Laden Sie unsere detaillierte Präsentation herunter, um mehr über SDIWare-Funktionen und -Spezifikationen zu erfahren",
             pdfButton: "PDF Herunterladen",
@@ -403,7 +403,7 @@ const translations = {
             },
             info: {
                 trial: {
-                    title: "48-Stunden-Test",
+                    title: "30-Tage-Test",
                     desc: "Voll funktionsfähige Testversion ohne Einschränkungen. Perfekt zum Testen in Ihrer Produktionsumgebung."
                 },
                 instant: {
@@ -528,7 +528,7 @@ const translations = {
         },
         download: {
             title: "Descargar SDIWare",
-            subtitle: "Solicite su enlace de descarga de prueba gratuito de 48 horas",
+            subtitle: "Solicite su prueba de 30 días (enlace de descarga válido por 48 horas)",
             pdfTitle: "Información del Producto",
             pdfDesc: "Descargue nuestra presentación detallada para obtener más información sobre las características y especificaciones de SDIWare",
             pdfButton: "Descargar PDF",
@@ -550,7 +550,7 @@ const translations = {
             },
             info: {
                 trial: {
-                    title: "Prueba de 48 Horas",
+                    title: "Prueba de 30 Días",
                     desc: "Versión de prueba completa sin limitaciones. Perfecto para probar en su entorno de producción."
                 },
                 instant: {
@@ -675,7 +675,7 @@ const translations = {
         },
         download: {
             title: "Scarica SDIWare",
-            subtitle: "Richiedi il tuo link di download di prova gratuito di 48 ore",
+            subtitle: "Richiedi la tua prova di 30 giorni (link di download valido per 48 ore)",
             pdfTitle: "Informazioni sul Prodotto",
             pdfDesc: "Scarica la nostra presentazione dettagliata per saperne di più sulle funzionalità e specifiche di SDIWare",
             pdfButton: "Scarica PDF",
@@ -697,7 +697,7 @@ const translations = {
             },
             info: {
                 trial: {
-                    title: "Prova di 48 Ore",
+                    title: "Prova di 30 Giorni",
                     desc: "Versione di prova completa senza limitazioni. Perfetta per testare nel tuo ambiente di produzione."
                 },
                 instant: {
