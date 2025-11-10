@@ -31,3 +31,10 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
+
+# Large installer files
+*.exe
+*.msi
+*.dmg
+*.pkg
+info/
