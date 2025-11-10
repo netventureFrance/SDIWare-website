@@ -483,6 +483,17 @@ select:focus:not(:focus-visible) {
     margin-bottom: 3rem;
 }
 
+.current-version {
+    color: var(--accent-teal);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+.current-version strong {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1485,7 +1496,12 @@ html {
         <section id="download" class="download">
             <div class="container">
                 <h2 class="section-title" data-i18n="download.title">Download SDIWare</h2>
-                <p class="section-subtitle" data-i18n="download.subtitle">Request your free 48-hour trial download link</p>
+                <p class="section-subtitle">
+                    <span data-i18n="download.subtitle">Request your 30-day trial (download link valid for 48 hours)</span>
+                    <span id="current-version" class="current-version" style="display: none;">
+                        <br>Current Version: <strong id="version-number">Loading...</strong>
+                    </span>
+                </p>
 
                 <!-- PDF Download Link -->
                 <div class="pdf-download-banner">

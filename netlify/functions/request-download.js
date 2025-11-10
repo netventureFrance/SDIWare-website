@@ -1,9 +1,20 @@
 const Airtable = require('airtable');
+const { S3Client, HeadObjectCommand } = require('@aws-sdk/client-s3');
 
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   process.env.AIRTABLE_BASE_ID
 );
+
+// Configure R2 Client
+const r2Client = new S3Client({
+  region: 'auto',
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
 
 // Generate a unique token for the download link
 function generateToken() {
@@ -15,6 +26,25 @@ function getExpirationTime() {
   const now = new Date();
   const expirationDate = new Date(now.getTime() + 48 * 60 * 60 * 1000);
   return expirationDate.toISOString();
+}
+
+// Get current version from R2
+async function getCurrentVersion() {
+  try {
+    const command = new HeadObjectCommand({
+      Bucket: 'sdiware',
+      Key: 'SDIWare-Installer.exe',
+    });
+
+    const response = await r2Client.send(command);
+    const version = response.Metadata?.version || 'Latest';
+    const uploadDate = response.Metadata?.['upload-date'] || null;
+
+    return { version, uploadDate };
+  } catch (error) {
+    console.error('Error fetching version from R2:', error);
+    return { version: 'Latest', uploadDate: null };
+  }
 }
 
 exports.handler = async (event, context) => {
@@ -82,6 +112,11 @@ exports.handler = async (event, context) => {
     const downloadToken = generateToken();
     const expirationTime = getExpirationTime();
 
+    // Get current version from R2
+    const { version, uploadDate } = await getCurrentVersion();
+
+    console.log('Current version:', version);
+
     // Create record in Airtable
     const record = await base(process.env.AIRTABLE_TABLE_NAME).create({
       'Full Name': data.fullName,
@@ -97,6 +132,7 @@ exports.handler = async (event, context) => {
       'Request Date': new Date().toISOString(),
       'IP Address': event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'Unknown',
       'User Agent': event.headers['user-agent'] || 'Unknown',
+      'Version': version,
     });
 
     console.log('Download request created:', record.id);

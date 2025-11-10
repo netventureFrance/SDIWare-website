@@ -568,4 +568,46 @@ function clearSavedFormData() {
     console.log('Saved form data cleared');
 }
 
+// Fetch and display current version
+async function fetchCurrentVersion() {
+    try {
+        const response = await fetch('/.netlify/functions/get-version');
+        if (!response.ok) {
+            throw new Error('Failed to fetch version');
+        }
+
+        const data = await response.json();
+        const versionElement = document.getElementById('version-number');
+        const versionContainer = document.getElementById('current-version');
+
+        if (versionElement && data.version) {
+            versionElement.textContent = `v${data.version}`;
+
+            // Add upload date if available
+            if (data.uploadDate) {
+                const date = new Date(data.uploadDate);
+                const formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                versionElement.textContent += ` (${formattedDate})`;
+            }
+
+            // Show the version container
+            if (versionContainer) {
+                versionContainer.style.display = 'inline';
+            }
+
+            console.log('Current version:', data.version);
+        }
+    } catch (error) {
+        console.error('Error fetching version:', error);
+        // Silently fail - version display is not critical
+    }
+}
+
+// Fetch version when page loads
+fetchCurrentVersion();
+
 console.log('SDIWare website loaded successfully!');
