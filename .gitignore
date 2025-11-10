@@ -38,3 +38,4 @@ build/
 *.dmg
 *.pkg
 info/
+.DS_Store
