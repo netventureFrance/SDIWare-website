@@ -1,16 +1,28 @@
 const Airtable = require('airtable');
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   process.env.AIRTABLE_BASE_ID
 );
 
-// File URL on FastComet
-const FILE_URL = 'https://www.sdiware.video/downloads/SDIWare-Installer.exe';
+// Configure R2 Client (S3-compatible)
+const r2Client = new S3Client({
+  region: 'auto',
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
+
+// R2 bucket and file details
+const BUCKET_NAME = 'sdiware';
+const FILE_KEY = 'SDIWare-Installer.exe';
 
 exports.handler = async (event, context) => {
   // Extract token from URL path
-  // URL will be: /.netlify/functions/download/TOKEN
   const pathParts = event.path.split('/');
   const token = pathParts[pathParts.length - 1];
 
@@ -72,21 +84,8 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Check if already downloaded (optional - remove if you want to allow multiple downloads)
-    if (status === 'Downloaded') {
-      console.log('Already downloaded');
-      return {
-        statusCode: 200,
-        headers: { 'Content-Type': 'text/html' },
-        body: generateSuccessPage(
-          'This download link has already been used. Your download should start automatically. If not, click the button below.',
-          FILE_URL
-        ),
-      };
-    }
-
     // Check if status is valid
-    if (status !== 'Pending' && status !== 'Sent') {
+    if (status !== 'Pending' && status !== 'Sent' && status !== 'Downloaded') {
       console.log('Invalid status:', status);
       return {
         statusCode: 400,
@@ -95,12 +94,22 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Update status to Downloaded
-    await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, {
-      Status: 'Downloaded',
+    // Generate presigned URL for R2 (valid for 15 minutes)
+    const command = new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: FILE_KEY,
     });
 
-    console.log('Download authorized, redirecting to file');
+    const downloadUrl = await getSignedUrl(r2Client, command, { expiresIn: 900 }); // 15 minutes
+
+    console.log('Generated presigned URL (expires in 15 min)');
+
+    // Update status to Downloaded if not already
+    if (status !== 'Downloaded') {
+      await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, {
+        Status: 'Downloaded',
+      });
+    }
 
     // Return success page with auto-download
     return {
@@ -108,7 +117,7 @@ exports.handler = async (event, context) => {
       headers: { 'Content-Type': 'text/html' },
       body: generateSuccessPage(
         'Your download is starting... If the download doesn\'t start automatically, click the button below.',
-        FILE_URL
+        downloadUrl
       ),
     };
 
@@ -172,17 +181,10 @@ function generateErrorPage(message, expired = false) {
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: inherit;
         }
         .btn:hover {
             background: #00b894;
             transform: translateY(-2px);
-        }
-        button.btn {
-            margin-top: 1rem;
         }
     </style>
 </head>
@@ -213,20 +215,16 @@ function generateSuccessPage(message, downloadUrl) {
             window.location.href = '${downloadUrl}';
         }, 2000);
 
-        // Attempt to close window after 5 seconds (only works if opened via window.open)
+        // Attempt to close window after 5 seconds
         setTimeout(function() {
-            // Show close message
             document.getElementById('message').innerHTML = 'Download started! You can close this tab now.';
             document.getElementById('spinner').style.display = 'none';
             document.getElementById('closeBtn').style.display = 'inline-block';
-
-            // Try to auto-close (may not work in all browsers)
             window.close();
         }, 5000);
 
         function closeWindow() {
             window.close();
-            // If window.close() doesn't work, show message
             setTimeout(function() {
                 alert('Please close this tab manually using your browser\\'s close button.');
             }, 500);
