@@ -157,14 +157,31 @@
 
         <form id="uploadForm">
             <div class="form-group">
-                <label for="secret">Upload Password:</label>
+                <label for="version">Version Number: *</label>
+                <input type="text" id="version" name="version" required
+                       placeholder="e.g., 1.2.0 or 2025.01.10"
+                       pattern="[\d\.]+"
+                       title="Use format like: 1.2.0 or 2025.01.10">
+                <div class="file-info">Format: 1.2.0 or YYYY.MM.DD</div>
+            </div>
+
+            <div class="form-group">
+                <label for="uploadedBy">Your Name: *</label>
+                <input type="text" id="uploadedBy" name="uploadedBy" required
+                       placeholder="e.g., John Doe"
+                       maxlength="50">
+                <div class="file-info">So we know who uploaded this version</div>
+            </div>
+
+            <div class="form-group">
+                <label for="secret">Upload Password: *</label>
                 <input type="password" id="secret" name="secret" required
                        placeholder="Enter team upload password"
                        autocomplete="off">
             </div>
 
             <div class="form-group">
-                <label for="installer">SDIWare Installer (.exe):</label>
+                <label for="installer">SDIWare Installer (.exe): *</label>
                 <input type="file" id="installer" name="installer"
                        accept=".exe" required>
                 <div class="file-info" id="fileInfo"></div>
@@ -214,26 +231,31 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const version = document.getElementById('version').value;
+            const uploadedBy = document.getElementById('uploadedBy').value;
             const secret = document.getElementById('secret').value;
             const file = fileInput.files[0];
 
-            if (!file) {
-                showMessage('❌ Please select a file', 'error');
+            if (!version || !uploadedBy || !file || !secret) {
+                showMessage('❌ Please fill in all required fields', 'error');
                 return;
             }
 
-            if (!secret) {
-                showMessage('❌ Please enter upload password', 'error');
+            // Validate version format
+            if (!/^[\d\.]+$/.test(version)) {
+                showMessage('❌ Invalid version format. Use numbers and dots only (e.g., 1.2.0)', 'error');
                 return;
             }
 
-            // Confirm upload
-            if (!confirm(`Are you sure you want to upload "${file.name}" to production?\n\nThis will replace the current installer immediately.`)) {
+            // Confirm upload with version info
+            if (!confirm(`Are you sure you want to upload version ${version}?\n\nFile: ${file.name}\nUploaded by: ${uploadedBy}\n\nThis will replace the current installer immediately.`)) {
                 return;
             }
 
             // Prepare form data
             const formData = new FormData();
+            formData.append('version', version);
+            formData.append('uploadedBy', uploadedBy);
             formData.append('secret', secret);
             formData.append('installer', file);
 
@@ -258,7 +280,7 @@
 
                 if (response.ok && data.success) {
                     const sizeMB = (data.size / 1024 / 1024).toFixed(2);
-                    showMessage(`✅ Upload successful!\n${data.filename} (${sizeMB} MB)\n\nThe new installer is now live.`, 'success');
+                    showMessage(`✅ Upload successful!\n\nVersion: ${data.version}\nFile: ${data.filename} (${sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification sent to admin.`, 'success');
                     form.reset();
                     fileInfo.textContent = '';
                 } else {
