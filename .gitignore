@@ -3,6 +3,9 @@
 .env.local
 .env.production
 
+# R2 configuration (contains credentials)
+.r2-config
+
 # Dependencies
 node_modules/
 package-lock.json

@@ -1,29 +1,46 @@
 # Quick Upload Reference
 
-## TL;DR - Upload New Installer
+## ⭐ RECOMMENDED: Upload with Automatic Backup
 
-### Option 1: Cloudflare Dashboard (5 minutes)
+```bash
+./upload-with-backup.sh /path/to/SDIWare-Installer.exe
+```
+
+**Why this is best:**
+- ✅ Automatic backup before upload
+- ✅ Easy rollback if needed
+- ✅ Simple one-command process
+
+**First time?** Run setup first: `./setup-r2-config.sh`
+
+---
+
+## Alternative Methods
+
+### Option 1: Cloudflare Dashboard (Manual)
 1. Go to https://dash.cloudflare.com
 2. R2 → `sdiware` bucket
 3. Upload → Select `SDIWare-Installer.exe`
 4. Done ✓
 
-### Option 2: Bash Script (After initial setup)
+**Note:** No automatic backup with this method
+
+### Option 2: Upload Portal (For Team)
+1. Go to https://sdiware.video/admin-upload.html
+2. Enter team password
+3. Upload file
+4. Done ✓
+
+**Setup:** See TEAM-ACCESS-README.md
+
+### Option 3: Individual Scripts (Advanced)
 ```bash
 ./upload-to-r2.sh /path/to/SDIWare-Installer.exe
-```
-
-### Option 3: Python Script (After initial setup)
-```bash
+# or
 python upload-to-r2.py /path/to/SDIWare-Installer.exe
 ```
 
-### Option 4: AWS CLI Direct
-```bash
-aws s3 cp SDIWare-Installer.exe s3://sdiware/SDIWare-Installer.exe \
-  --endpoint-url https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com \
-  --profile r2
-```
+**Note:** No automatic backup with these methods
 
 ---
 
