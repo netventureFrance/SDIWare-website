@@ -101,6 +101,19 @@ function switchLanguage(lang) {
         }
     });
 
+    // Update elements with HTML content (for links, formatted text, etc.)
+    document.querySelectorAll('[data-i18n-html]').forEach(element => {
+        const key = element.getAttribute('data-i18n-html');
+        const translation = getNestedTranslation(translations[lang], key);
+
+        if (translation !== undefined && translation !== null) {
+            element.innerHTML = translation;
+            translatedCount++;
+        } else {
+            console.warn('Translation missing for key:', key);
+        }
+    });
+
     // Update format text with current language
     updateFormatText();
 
