@@ -530,51 +530,96 @@ select:focus:not(:focus-visible) {
     background: var(--secondary-bg);
 }
 
-.use-cases-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+/* Use Case Tabs */
+.use-case-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0 2rem 0;
+    flex-wrap: wrap;
+}
+
+.use-case-tab {
+    background: var(--card-bg);
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    color: var(--text-white);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.use-case-tab:hover {
+    border-color: var(--accent-teal);
+    transform: translateY(-2px);
+}
+
+.use-case-tab.active {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+    color: var(--text-white);
+}
+
+/* Use Case Content */
+.use-case-content-wrapper {
     max-width: 1200px;
     margin: 0 auto;
+    min-height: 400px;
+    position: relative;
 }
 
-.use-case-card {
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 0.5rem;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    text-align: center;
+.use-case-content {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.use-case-card:hover {
-    border-color: var(--accent-teal);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+.use-case-content.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
 }
 
-.use-case-icon {
-    font-size: 3.5rem;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.use-case-text h3 {
+    font-size: 2rem;
     margin-bottom: 1.5rem;
-    filter: grayscale(0.3);
-    transition: filter 0.3s ease;
-}
-
-.use-case-card:hover .use-case-icon {
-    filter: grayscale(0);
-}
-
-.use-case-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
     color: var(--accent-teal);
     font-weight: 700;
 }
 
-.use-case-card p {
+.use-case-text p {
     color: var(--text-grey);
-    line-height: 1.7;
-    font-size: 0.95rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.use-case-images {
+    background: var(--card-bg);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 3px solid var(--accent-teal);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.use-case-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    display: block;
 }
 
 /* Partners Section */
@@ -966,8 +1011,14 @@ select:focus:not(:focus-visible) {
         grid-template-columns: 1fr;
     }
 
-    .use-cases-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .use-case-content.active {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .use-case-tab {
+        font-size: 0.85rem;
+        padding: 0.875rem 1.25rem;
     }
 
     .partners-grid {
@@ -1012,12 +1063,17 @@ select:focus:not(:focus-visible) {
         font-size: 1.125rem;
     }
 
-    .use-cases-grid {
-        grid-template-columns: 1fr;
+    .use-case-tabs {
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
-    .use-case-icon {
-        font-size: 2.5rem;
+    .use-case-tab {
+        width: 100%;
+    }
+
+    .use-case-text h3 {
+        font-size: 1.5rem;
     }
 
     .partners-grid {
@@ -1258,26 +1314,63 @@ html {
             <div class="container">
                 <h2 class="section-title" data-i18n="useCases.title">Use Cases</h2>
                 <p class="section-subtitle" data-i18n="useCases.subtitle">SDIWare adapts to your production environment</p>
-                <div class="use-cases-grid">
-                    <div class="use-case-card">
-                        <div class="use-case-icon" aria-hidden="true">📺</div>
-                        <h3 data-i18n="useCases.studio.title">Live Studio Production</h3>
-                        <p data-i18n="useCases.studio.desc">Perfect for broadcast studios requiring reliable SDI to NDI conversion for multi-camera productions and live switching</p>
+
+                <!-- Use Case Tabs -->
+                <div class="use-case-tabs">
+                    <button class="use-case-tab active" data-tab="studio">
+                        <span data-i18n="useCases.studio.title">Live Studio Production</span>
+                    </button>
+                    <button class="use-case-tab" data-tab="broadcast">
+                        <span data-i18n="useCases.broadcast.title">Outside Broadcast Production</span>
+                    </button>
+                    <button class="use-case-tab" data-tab="corporate">
+                        <span data-i18n="useCases.corporate.title">Live Corporate Event</span>
+                    </button>
+                    <button class="use-case-tab" data-tab="remote">
+                        <span data-i18n="useCases.remote.title">Remote and Cloud Production</span>
+                    </button>
+                </div>
+
+                <!-- Use Case Content -->
+                <div class="use-case-content-wrapper">
+                    <div class="use-case-content active" data-content="studio">
+                        <div class="use-case-text">
+                            <h3 data-i18n="useCases.studio.title">Live Studio Production</h3>
+                            <p data-i18n="useCases.studio.desc">Perfect for broadcast studios requiring reliable SDI to NDI conversion for multi-camera productions and live switching</p>
+                        </div>
+                        <div class="use-case-images">
+                            <img src="images/sdiware-ui.png" alt="SDIWare Studio Setup">
+                        </div>
                     </div>
-                    <div class="use-case-card">
-                        <div class="use-case-icon" aria-hidden="true">🚐</div>
-                        <h3 data-i18n="useCases.broadcast.title">Outside Broadcast Production</h3>
-                        <p data-i18n="useCases.broadcast.desc">Designed for mobile production units and OB vans, enabling seamless integration of traditional SDI equipment with modern NDI workflows</p>
+
+                    <div class="use-case-content" data-content="broadcast">
+                        <div class="use-case-text">
+                            <h3 data-i18n="useCases.broadcast.title">Outside Broadcast Production</h3>
+                            <p data-i18n="useCases.broadcast.desc">Designed for mobile production units and OB vans, enabling seamless integration of traditional SDI equipment with modern NDI workflows</p>
+                        </div>
+                        <div class="use-case-images">
+                            <img src="images/sdiware-ui-ndi-decoder.png" alt="SDIWare OB Van Setup">
+                        </div>
                     </div>
-                    <div class="use-case-card">
-                        <div class="use-case-icon" aria-hidden="true">🎤</div>
-                        <h3 data-i18n="useCases.corporate.title">Live Corporate Event</h3>
-                        <p data-i18n="useCases.corporate.desc">Ideal for corporate events, conferences, and presentations requiring professional broadcast quality with flexible connectivity</p>
+
+                    <div class="use-case-content" data-content="corporate">
+                        <div class="use-case-text">
+                            <h3 data-i18n="useCases.corporate.title">Live Corporate Event</h3>
+                            <p data-i18n="useCases.corporate.desc">Ideal for corporate events, conferences, and presentations requiring professional broadcast quality with flexible connectivity</p>
+                        </div>
+                        <div class="use-case-images">
+                            <img src="images/sdiware-ui-sdi-encode.png" alt="SDIWare Corporate Event">
+                        </div>
                     </div>
-                    <div class="use-case-card">
-                        <div class="use-case-icon" aria-hidden="true">☁️</div>
-                        <h3 data-i18n="useCases.remote.title">Remote and Cloud Production</h3>
-                        <p data-i18n="useCases.remote.desc">Enable distributed production workflows with IP-based video delivery for remote operators and cloud-based production environments</p>
+
+                    <div class="use-case-content" data-content="remote">
+                        <div class="use-case-text">
+                            <h3 data-i18n="useCases.remote.title">Remote and Cloud Production</h3>
+                            <p data-i18n="useCases.remote.desc">Enable distributed production workflows with IP-based video delivery for remote operators and cloud-based production environments</p>
+                        </div>
+                        <div class="use-case-images">
+                            <img src="images/sdiware-ui-web-decode.png" alt="SDIWare Remote Production">
+                        </div>
                     </div>
                 </div>
             </div>

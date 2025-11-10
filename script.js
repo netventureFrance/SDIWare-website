@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimations();
     initFormatRotation();
     initUICarousel();
+    initUseCaseTabs();
     initDownloadForm();
 
     // Check for saved language preference and apply AFTER initialization
@@ -367,6 +368,43 @@ function initUICarousel() {
     // Start auto-rotation
     startAutoRotation();
     console.log('UI Carousel started with manual controls');
+}
+
+// Use Case Tabs
+function initUseCaseTabs() {
+    console.log('=== Initializing Use Case Tabs ===');
+
+    const tabs = document.querySelectorAll('.use-case-tab');
+    const contents = document.querySelectorAll('.use-case-content');
+
+    if (!tabs || tabs.length === 0) {
+        console.log('No use case tabs found, skipping initialization');
+        return;
+    }
+
+    console.log('Found', tabs.length, 'use case tabs');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabName = tab.getAttribute('data-tab');
+            console.log('Switching to tab:', tabName);
+
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked tab
+            tab.classList.add('active');
+
+            // Show corresponding content
+            const activeContent = document.querySelector(`[data-content="${tabName}"]`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+        });
+    });
+
+    console.log('Use case tabs initialized');
 }
 
 // Download form handling
