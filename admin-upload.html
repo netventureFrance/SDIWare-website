@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDIWare Upload Portal - R&D Team</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #3d4f5c 0%, #2d3e4a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            border-radius: 1rem;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #3d4f5c;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        input[type="password"]:focus,
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #00d4aa;
+        }
+        .file-info {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+        .btn {
+            width: 100%;
+            background: #00d4aa;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover:not(:disabled) {
+            background: #00b894;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+        }
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .progress {
+            display: none;
+            margin-top: 1rem;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #00d4aa;
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: indeterminate 1.5s infinite;
+        }
+        @keyframes indeterminate {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(300%); }
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #00d4aa;
+            color: #004085;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        .info-box strong {
+            color: #003d7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SDIWare Upload Portal</h1>
+        <p class="subtitle">R&D Team - Upload New Releases</p>
+
+        <div class="info-box">
+            <strong>Current File:</strong> SDIWare-Installer.exe<br>
+            <strong>Location:</strong> Cloudflare R2 bucket "sdiware"<br>
+            <strong>Action:</strong> This will replace the current installer
+        </div>
+
+        <div class="warning">
+            ⚠️ <strong>Warning:</strong> Uploading will immediately overwrite the live installer file.
+            Ensure the new version has been tested before uploading.
+        </div>
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="secret">Upload Password:</label>
+                <input type="password" id="secret" name="secret" required
+                       placeholder="Enter team upload password"
+                       autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="installer">SDIWare Installer (.exe):</label>
+                <input type="file" id="installer" name="installer"
+                       accept=".exe" required>
+                <div class="file-info" id="fileInfo"></div>
+            </div>
+
+            <button type="submit" class="btn" id="uploadBtn">
+                Upload to R2
+            </button>
+
+            <div class="progress" id="progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="message" id="message"></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('installer');
+        const fileInfo = document.getElementById('fileInfo');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const message = document.getElementById('message');
+        const progress = document.getElementById('progress');
+        const progressFill = document.getElementById('progressFill');
+
+        // Show file info when selected
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                fileInfo.textContent = `Selected: ${file.name} (${sizeMB} MB)`;
+
+                // Warn if file is not .exe
+                if (!file.name.endsWith('.exe')) {
+                    fileInfo.textContent += ' ⚠️ Warning: Not an .exe file';
+                    fileInfo.style.color = '#ff4500';
+                } else {
+                    fileInfo.style.color = '#666';
+                }
+            }
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const secret = document.getElementById('secret').value;
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showMessage('❌ Please select a file', 'error');
+                return;
+            }
+
+            if (!secret) {
+                showMessage('❌ Please enter upload password', 'error');
+                return;
+            }
+
+            // Confirm upload
+            if (!confirm(`Are you sure you want to upload "${file.name}" to production?\n\nThis will replace the current installer immediately.`)) {
+                return;
+            }
+
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('secret', secret);
+            formData.append('installer', file);
+
+            // Show progress
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Uploading...';
+            progress.style.display = 'block';
+            message.style.display = 'none';
+
+            try {
+                const response = await fetch('/.netlify/functions/admin-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    data = { error: 'Invalid response from server' };
+                }
+
+                if (response.ok && data.success) {
+                    const sizeMB = (data.size / 1024 / 1024).toFixed(2);
+                    showMessage(`✅ Upload successful!\n${data.filename} (${sizeMB} MB)\n\nThe new installer is now live.`, 'success');
+                    form.reset();
+                    fileInfo.textContent = '';
+                } else {
+                    showMessage(`❌ Upload failed: ${data.error || 'Unknown error'}`, 'error');
+                }
+
+            } catch (error) {
+                showMessage(`❌ Network error: ${error.message}\n\nPlease check your connection and try again.`, 'error');
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.textContent = 'Upload to R2';
+                progress.style.display = 'none';
+            }
+        });
+
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            message.style.whiteSpace = 'pre-line';
+
+            // Scroll to message
+            message.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
