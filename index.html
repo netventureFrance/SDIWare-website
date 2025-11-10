@@ -271,6 +271,66 @@ select:focus:not(:focus-visible) {
     z-index: 1;
 }
 
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-white);
+    border: none;
+    font-size: 3rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease;
+    border-radius: 0.5rem;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.carousel-prev {
+    left: 1rem;
+}
+
+.carousel-next {
+    right: 1rem;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid var(--text-white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.carousel-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.carousel-dot.active {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+}
+
 .hero-title {
     font-size: 3rem;
     font-weight: 700;
@@ -1090,6 +1150,18 @@ html {
                         <img src="images/sdiware-ui-ndi-decoder.png" alt="SDIWare NDI Decoder" class="hero-ui-image" data-ui-index="1">
                         <img src="images/sdiware-ui-sdi-encode.png" alt="SDIWare SDI Encoder" class="hero-ui-image" data-ui-index="2">
                         <img src="images/sdiware-ui-web-decode.png" alt="SDIWare Web Decoder" class="hero-ui-image" data-ui-index="3">
+
+                        <!-- Carousel Controls -->
+                        <button class="carousel-btn carousel-prev" aria-label="Previous image">‹</button>
+                        <button class="carousel-btn carousel-next" aria-label="Next image">›</button>
+
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators">
+                            <button class="carousel-dot active" data-index="0" aria-label="Go to image 1"></button>
+                            <button class="carousel-dot" data-index="1" aria-label="Go to image 2"></button>
+                            <button class="carousel-dot" data-index="2" aria-label="Go to image 3"></button>
+                            <button class="carousel-dot" data-index="3" aria-label="Go to image 4"></button>
+                        </div>
                     </div>
                     <h1 class="hero-title">
                         <span data-i18n="hero.titlePrefix">Professional</span>

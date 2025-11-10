@@ -297,6 +297,9 @@ function initUICarousel() {
     console.log('=== Initializing UI Carousel ===');
 
     const uiImages = document.querySelectorAll('.hero-ui-image');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
 
     if (!uiImages || uiImages.length === 0) {
         console.log('No UI images found, skipping carousel');
@@ -305,29 +308,65 @@ function initUICarousel() {
 
     console.log('Found', uiImages.length, 'UI images');
 
-    // Clear any existing interval
-    if (uiCarouselInterval) {
-        clearInterval(uiCarouselInterval);
+    // Function to update carousel (images and indicators)
+    function goToSlide(index) {
+        // Remove active class from current image and dot
+        uiImages[currentUIIndex].classList.remove('active');
+        dots[currentUIIndex].classList.remove('active');
+
+        // Update index
+        currentUIIndex = index;
+
+        // Add active class to new image and dot
+        uiImages[currentUIIndex].classList.add('active');
+        dots[currentUIIndex].classList.add('active');
+
+        console.log('Showing image', currentUIIndex);
     }
 
-    // Start carousel - change image every 10 seconds
-    uiCarouselInterval = setInterval(() => {
-        console.log('=== UI Carousel tick at', new Date().toLocaleTimeString(), '===');
+    // Function to start auto-rotation
+    function startAutoRotation() {
+        // Clear any existing interval
+        if (uiCarouselInterval) {
+            clearInterval(uiCarouselInterval);
+        }
 
-        // Remove active class from current image
-        uiImages[currentUIIndex].classList.remove('active');
-        console.log('Hiding image', currentUIIndex);
+        // Start carousel - change image every 10 seconds
+        uiCarouselInterval = setInterval(() => {
+            const nextIndex = (currentUIIndex + 1) % uiImages.length;
+            goToSlide(nextIndex);
+        }, 10000);
+    }
 
-        // Move to next image
-        currentUIIndex = (currentUIIndex + 1) % uiImages.length;
-        console.log('Showing image', currentUIIndex);
+    // Previous button
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const prevIndex = (currentUIIndex - 1 + uiImages.length) % uiImages.length;
+            goToSlide(prevIndex);
+            startAutoRotation(); // Restart timer
+        });
+    }
 
-        // Add active class to new image
-        uiImages[currentUIIndex].classList.add('active');
+    // Next button
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const nextIndex = (currentUIIndex + 1) % uiImages.length;
+            goToSlide(nextIndex);
+            startAutoRotation(); // Restart timer
+        });
+    }
 
-    }, 10000); // 10 seconds
+    // Dot indicators
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+            startAutoRotation(); // Restart timer
+        });
+    });
 
-    console.log('UI Carousel started (ID:', uiCarouselInterval, ')');
+    // Start auto-rotation
+    startAutoRotation();
+    console.log('UI Carousel started with manual controls');
 }
 
 // Download form handling
