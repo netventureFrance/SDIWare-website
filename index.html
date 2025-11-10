@@ -678,6 +678,53 @@ select:focus:not(:focus-visible) {
     background: var(--secondary-bg);
 }
 
+/* PDF Download Banner */
+.pdf-download-banner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--card-bg);
+    padding: 2rem 2.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--accent-teal);
+    margin: 3rem auto;
+    max-width: 900px;
+    box-shadow: 0 10px 30px rgba(0, 212, 170, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pdf-download-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 212, 170, 0.25);
+}
+
+.pdf-download-icon {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+}
+
+.pdf-download-text {
+    flex: 1;
+}
+
+.pdf-download-text h3 {
+    color: var(--accent-teal);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.pdf-download-text p {
+    color: var(--text-grey);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.pdf-download-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
 .download-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1029,6 +1076,21 @@ select:focus:not(:focus-visible) {
     .impressum-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .pdf-download-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .pdf-download-icon {
+        font-size: 3rem;
+    }
+
+    .pdf-download-text h3 {
+        font-size: 1.25rem;
     }
 
     .download-content {
@@ -1407,6 +1469,18 @@ html {
             <div class="container">
                 <h2 class="section-title" data-i18n="download.title">Download SDIWare</h2>
                 <p class="section-subtitle" data-i18n="download.subtitle">Request your free 48-hour trial download link</p>
+
+                <!-- PDF Download Link -->
+                <div class="pdf-download-banner">
+                    <div class="pdf-download-icon">📄</div>
+                    <div class="pdf-download-text">
+                        <h3 data-i18n="download.pdfTitle">Product Information</h3>
+                        <p data-i18n="download.pdfDesc">Download our detailed presentation to learn more about SDIWare features and specifications</p>
+                    </div>
+                    <a href="/downloads/SDIWare-presentation.pdf" download class="btn btn-secondary pdf-download-btn" data-i18n="download.pdfButton">
+                        Download PDF
+                    </a>
+                </div>
 
                 <div class="download-content">
                     <div class="download-form-container">

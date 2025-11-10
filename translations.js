@@ -88,6 +88,9 @@ const translations = {
         download: {
             title: "Download SDIWare",
             subtitle: "Request your free 48-hour trial download link",
+            pdfTitle: "Product Information",
+            pdfDesc: "Download our detailed presentation to learn more about SDIWare features and specifications",
+            pdfButton: "Download PDF",
             form: {
                 name: "Full Name",
                 email: "Email Address",
@@ -232,6 +235,9 @@ const translations = {
         download: {
             title: "Télécharger SDIWare",
             subtitle: "Demandez votre lien de téléchargement d'essai gratuit de 48 heures",
+            pdfTitle: "Informations Produit",
+            pdfDesc: "Téléchargez notre présentation détaillée pour en savoir plus sur les fonctionnalités et spécifications de SDIWare",
+            pdfButton: "Télécharger PDF",
             form: {
                 name: "Nom Complet",
                 email: "Adresse E-mail",
@@ -376,6 +382,9 @@ const translations = {
         download: {
             title: "SDIWare Herunterladen",
             subtitle: "Fordern Sie Ihren kostenlosen 48-Stunden-Test-Download-Link an",
+            pdfTitle: "Produktinformationen",
+            pdfDesc: "Laden Sie unsere detaillierte Präsentation herunter, um mehr über SDIWare-Funktionen und -Spezifikationen zu erfahren",
+            pdfButton: "PDF Herunterladen",
             form: {
                 name: "Vollständiger Name",
                 email: "E-Mail-Adresse",
@@ -520,6 +529,9 @@ const translations = {
         download: {
             title: "Descargar SDIWare",
             subtitle: "Solicite su enlace de descarga de prueba gratuito de 48 horas",
+            pdfTitle: "Información del Producto",
+            pdfDesc: "Descargue nuestra presentación detallada para obtener más información sobre las características y especificaciones de SDIWare",
+            pdfButton: "Descargar PDF",
             form: {
                 name: "Nombre Completo",
                 email: "Correo Electrónico",
@@ -664,6 +676,9 @@ const translations = {
         download: {
             title: "Scarica SDIWare",
             subtitle: "Richiedi il tuo link di download di prova gratuito di 48 ore",
+            pdfTitle: "Informazioni sul Prodotto",
+            pdfDesc: "Scarica la nostra presentazione dettagliata per saperne di più sulle funzionalità e specifiche di SDIWare",
+            pdfButton: "Scarica PDF",
             form: {
                 name: "Nome Completo",
                 email: "Indirizzo Email",
