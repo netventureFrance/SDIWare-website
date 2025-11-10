@@ -5,7 +5,9 @@
 [functions]
   node_bundler = "esbuild"
 
-# Domain redirects - redirect sdiware.tv to sdiware.video
+# Domain redirects - redirect all domains to sdiware.video
+
+# sdiware.tv
 [[redirects]]
   from = "https://sdiware.tv/*"
   to = "https://sdiware.video/:splat"
@@ -26,6 +28,106 @@
 
 [[redirects]]
   from = "http://www.sdiware.tv/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+# sdiware.online
+[[redirects]]
+  from = "https://sdiware.online/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sdiware.online/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://sdiware.online/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sdiware.online/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+# sdiware.net
+[[redirects]]
+  from = "https://sdiware.net/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sdiware.net/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://sdiware.net/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sdiware.net/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+# sdiware.com
+[[redirects]]
+  from = "https://sdiware.com/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sdiware.com/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://sdiware.com/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sdiware.com/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+# sdiware.de
+[[redirects]]
+  from = "https://sdiware.de/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sdiware.de/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://sdiware.de/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sdiware.de/*"
   to = "https://sdiware.video/:splat"
   status = 301
   force = true
