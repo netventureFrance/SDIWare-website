@@ -4,3 +4,28 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Domain redirects - redirect sdiware.tv to sdiware.video
+[[redirects]]
+  from = "https://sdiware.tv/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sdiware.tv/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://sdiware.tv/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sdiware.tv/*"
+  to = "https://sdiware.video/:splat"
+  status = 301
+  force = true
