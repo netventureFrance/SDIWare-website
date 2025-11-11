@@ -25,6 +25,11 @@ async function sendEmailViaSendGrid(subject, body) {
     from: NOTIFICATION_EMAIL,
     subject: subject,
     text: body,
+    trackingSettings: {
+      clickTracking: {
+        enable: false,
+      },
+    },
   };
 
   await sgMail.send(msg);

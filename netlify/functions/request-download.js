@@ -103,7 +103,6 @@ Licensed To: ${fullName}
 
 📧 Email Support: info@sdiware.video
 🌐 Website: https://sdiware.video
-📄 Documentation: https://sdiware.video/docs
 💼 Your Use Case: ${useCase}
 
 We're here to help you get the most out of SDIWare!
@@ -132,6 +131,11 @@ For support, please reply to this email or contact info@sdiware.video
     replyTo: 'info@sdiware.video',
     subject: subject,
     text: textContent,
+    trackingSettings: {
+      clickTracking: {
+        enable: false,
+      },
+    },
   };
 
   try {
