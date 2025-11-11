@@ -1,5 +1,9 @@
 const Airtable = require('airtable');
 const { S3Client, HeadObjectCommand } = require('@aws-sdk/client-s3');
+const sgMail = require('@sendgrid/mail');
+
+// Configure SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Configure Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
@@ -44,6 +48,99 @@ async function getCurrentVersion() {
   } catch (error) {
     console.error('Error fetching version from R2:', error);
     return { version: 'Latest', uploadDate: null };
+  }
+}
+
+// Send download email via SendGrid
+async function sendDownloadEmail({ fullName, email, version, downloadToken, useCase }) {
+  const downloadUrl = `https://sdiware.video/.netlify/functions/download/${downloadToken}`;
+
+  const subject = `Your SDIWare v${version} Download is Ready! 🎉`;
+
+  const textContent = `
+Dear ${fullName},
+
+Thank you for choosing SDIWare! Your download link is now ready.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 SDIWare v${version} - Professional Broadcast Video Conversion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔗 Download Link:
+${downloadUrl}
+
+Version: ${version}
+Trial Period: 30 days (from activation)
+Link Valid For: 48 hours
+Licensed To: ${fullName}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Quick Start Guide
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Click the download link above
+2. Save the installer file (SDIWare-Installer.exe)
+3. Run the installer and follow the setup wizard
+4. Activate your 30-day trial when prompted
+
+⚠️ IMPORTANT: Your download link expires in 48 hours from now. Please download the installer within this timeframe.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ What's Included in v${version}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ SDI/NDI/IP2110 conversion
+✅ 4K HDR 10-bit support
+✅ Alpha channel support
+✅ Multi-channel audio
+✅ Tally integration
+✅ Program & Preview feeds
+✅ CEF & WebRTC support
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 Need Help?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📧 Email Support: info@sdiware.video
+🌐 Website: https://sdiware.video
+📄 Documentation: https://sdiware.video/docs
+💼 Your Use Case: ${useCase}
+
+We're here to help you get the most out of SDIWare!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Best regards,
+The SDIWare Team
+
+netventure r&d SRL
+Via della Consolata 1bis
+I-10122 Torino, Italia
+
+---
+This is an automated email. Your 30-day trial begins when you activate the software.
+The download link expires 48 hours from receipt of this email.
+For support, please reply to this email or contact info@sdiware.video
+  `.trim();
+
+  const msg = {
+    to: email,
+    from: {
+      email: 'info@sdiware.video',
+      name: 'SDIWare Team'
+    },
+    replyTo: 'info@sdiware.video',
+    subject: subject,
+    text: textContent,
+  };
+
+  try {
+    await sgMail.send(msg);
+    console.log('Download email sent via SendGrid to:', email);
+    return true;
+  } catch (error) {
+    console.error('Error sending email via SendGrid:', error);
+    throw error;
   }
 }
 
@@ -136,6 +233,21 @@ exports.handler = async (event, context) => {
     });
 
     console.log('Download request created:', record.id);
+
+    // Send download email via SendGrid
+    try {
+      await sendDownloadEmail({
+        fullName: data.fullName,
+        email: data.email,
+        version: version,
+        downloadToken: downloadToken,
+        useCase: data.useCase,
+      });
+      console.log('Download email sent successfully to:', data.email);
+    } catch (emailError) {
+      console.error('Failed to send download email:', emailError);
+      // Continue anyway - record is created, user can contact support
+    }
 
     // Return success response
     return {
