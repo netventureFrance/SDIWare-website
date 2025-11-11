@@ -68,7 +68,7 @@ async function sendNewsletterEmails(version, sizeMB, changelog) {
   const subscribers = await base(process.env.AIRTABLE_TABLE_NAME)
     .select({
       filterByFormula: '{Newsletter} = 1',
-      fields: ['Full Name', 'Email', 'Download Token', 'Token Expiration']
+      fields: ['Full Name', 'Email', 'Company', 'Download Token', 'Token Expiration']
     })
     .all();
 
