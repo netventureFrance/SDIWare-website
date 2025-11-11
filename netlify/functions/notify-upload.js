@@ -55,7 +55,7 @@ function getExpirationTime() {
 }
 
 // Send newsletter emails to all subscribers
-async function sendNewsletterEmails(version, sizeMB) {
+async function sendNewsletterEmails(version, sizeMB, changelog) {
   if (!SENDGRID_API_KEY) {
     console.log('SendGrid not configured, skipping newsletter');
     return 0;
@@ -120,6 +120,12 @@ ${downloadUrl}
 ⚠️ This download link expires in 48 hours.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ What's New in v${version}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${changelog}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Your 30-day trial continues - this is just an update to the latest version.
 
@@ -175,7 +181,46 @@ To stop receiving update notifications, please reply to this email.
     await sendSupportSummary(version, notifiedUsers);
   }
 
-  return sentCount;
+  return { count: sentCount, users: notifiedUsers };
+}
+
+// Save upload record to Upload History table
+async function saveUploadHistory(version, uploadedBy, sizeMB, changelog, newsletterCount, notifiedUsers) {
+  try {
+    // Build recipients list
+    let recipientsList = '';
+    notifiedUsers.forEach((user, index) => {
+      recipientsList += `${index + 1}. ${user.name} (${user.email}) - ${user.company}\n`;
+    });
+
+    const uploadDate = new Date().toISOString();
+
+    // Create record in Upload History table
+    await base('Upload History').create({
+      'Version': version,
+      'Uploaded By': uploadedBy,
+      'Upload Date': uploadDate,
+      'File Size (MB)': parseFloat(sizeMB),
+      'Changelog': changelog,
+      'Newsletter Sent': newsletterCount > 0,
+      'Recipients Count': newsletterCount,
+      'Recipients List': recipientsList.trim(),
+    });
+
+    console.log('Upload history saved:', version);
+  } catch (error) {
+    console.error('Failed to save upload history:', error.message);
+    console.log('Note: Make sure "Upload History" table exists in Airtable with these fields:');
+    console.log('- Version (Single line text)');
+    console.log('- Uploaded By (Single line text)');
+    console.log('- Upload Date (Date & time)');
+    console.log('- File Size (MB) (Number)');
+    console.log('- Changelog (Long text)');
+    console.log('- Newsletter Sent (Checkbox)');
+    console.log('- Recipients Count (Number)');
+    console.log('- Recipients List (Long text)');
+    // Don't throw - this is optional logging
+  }
 }
 
 // Send summary email to support team
@@ -274,7 +319,7 @@ exports.handler = async (event, context) => {
 
   try {
     const data = JSON.parse(event.body);
-    const { secret, version, uploadedBy, filename } = data;
+    const { secret, version, uploadedBy, filename, changelog } = data;
 
     // Validate authentication
     if (secret !== UPLOAD_SECRET) {
@@ -356,12 +401,25 @@ This is an automated notification from the SDIWare upload system.
     }
 
     // Send newsletter emails to all subscribers
+    let newsletterCount = 0;
+    let notifiedUsers = [];
+
     try {
-      const newsletterCount = await sendNewsletterEmails(version, sizeMB);
+      const result = await sendNewsletterEmails(version, sizeMB, changelog || 'No changelog provided');
+      newsletterCount = result.count;
+      notifiedUsers = result.users;
       console.log(`Newsletter sent to ${newsletterCount} subscribers`);
     } catch (newsletterError) {
       console.error('Failed to send newsletter emails:', newsletterError);
       // Continue anyway - admin was notified
+    }
+
+    // Save upload history to Airtable (optional - won't fail if table doesn't exist)
+    try {
+      await saveUploadHistory(version, uploadedBy, sizeMB, changelog || 'No changelog provided', newsletterCount, notifiedUsers);
+    } catch (historyError) {
+      console.error('Failed to save upload history:', historyError);
+      // Continue anyway - this is optional logging
     }
 
     return {

@@ -49,8 +49,19 @@
             font-size: 1rem;
             font-family: inherit;
         }
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+        }
         input[type="password"]:focus,
-        input[type="file"]:focus {
+        input[type="file"]:focus,
+        textarea:focus {
             outline: none;
             border-color: #00d4aa;
         }
@@ -169,6 +180,16 @@
             </div>
 
             <div class="form-group">
+                <label for="changelog">What's New in This Version: *</label>
+                <textarea id="changelog" name="changelog" required
+                          placeholder="Describe new features, fixes, and improvements...&#10;&#10;Example:&#10;- Added support for 4K HDR&#10;- Fixed audio sync issue&#10;- Improved NDI performance&#10;- Updated CEF to latest version"
+                          rows="6"></textarea>
+                <small style="color: #999; display: block; margin-top: 0.5rem;">
+                    This will be included in the newsletter email to subscribers.
+                </small>
+            </div>
+
+            <div class="form-group">
                 <label for="secret">Upload Password: *</label>
                 <input type="password" id="secret" name="secret" required
                        placeholder="Enter team upload password"
@@ -234,10 +255,11 @@
 
             const version = document.getElementById('version').value;
             const uploadedBy = document.getElementById('uploadedBy').value;
+            const changelog = document.getElementById('changelog').value;
             const secret = document.getElementById('secret').value;
             const file = fileInput.files[0];
 
-            if (!version || !uploadedBy || !file || !secret) {
+            if (!version || !uploadedBy || !changelog || !file || !secret) {
                 showMessage('❌ Please fill in all required fields', 'error');
                 return;
             }
@@ -285,6 +307,7 @@
                         secret: secret,
                         version: version,
                         uploadedBy: uploadedBy,
+                        changelog: changelog,
                     })
                 });
 
@@ -376,6 +399,7 @@
                         version: version,
                         uploadedBy: uploadedBy,
                         filename: file.name,
+                        changelog: changelog,
                     })
                 });
 

@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
 
   try {
     const data = JSON.parse(event.body);
-    const { secret, version, uploadedBy } = data;
+    const { secret, version, uploadedBy, changelog } = data;
 
     // Validate authentication
     if (secret !== UPLOAD_SECRET) {
@@ -55,11 +55,11 @@ exports.handler = async (event, context) => {
     }
 
     // Validate required fields
-    if (!version || !uploadedBy) {
+    if (!version || !uploadedBy || !changelog) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Missing version or uploadedBy' }),
+        body: JSON.stringify({ error: 'Missing version, uploadedBy, or changelog' }),
       };
     }
 
