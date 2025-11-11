@@ -342,7 +342,7 @@
                 });
 
                 xhr.open('PUT', uploadUrl);
-                xhr.setRequestHeader('Content-Type', 'application/x-msdownload');
+                // Don't set Content-Type - it's already in the presigned URL
                 xhr.send(file);
 
                 await uploadPromise;

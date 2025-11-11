@@ -69,7 +69,6 @@ exports.handler = async (event, context) => {
     const command = new PutObjectCommand({
       Bucket: 'sdiware',
       Key: 'SDIWare-Installer.exe',
-      ContentType: 'application/x-msdownload',
       Metadata: {
         'version': version,
         'uploaded-by': uploadedBy,
