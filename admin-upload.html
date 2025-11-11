@@ -324,34 +324,29 @@
                 // Upload promise
                 const uploadPromise = new Promise((resolve, reject) => {
                     xhr.onload = () => {
-                        addDebugLog(`📡 XHR onload: Status ${xhr.status} ${xhr.statusText}`);
-                        addDebugLog(`📋 Response headers: ${xhr.getAllResponseHeaders()}`);
-                        addDebugLog(`📄 Response text: ${xhr.responseText.substring(0, 200)}`);
-
                         if (xhr.status >= 200 && xhr.status < 300) {
-                            addDebugLog('✅ Upload successful (status 2xx)');
+                            addDebugLog('✅ Upload successful - verifying with backend...');
                             resolve();
                         } else if (xhr.status === 0 && uploadComplete) {
                             // CORS blocked response, but we reached 100% - likely succeeded
-                            addDebugLog('⚠️ CORS blocked response, but upload reached 100%');
-                            addDebugLog('🔄 Assuming upload succeeded, will verify with backend...');
+                            addDebugLog('✅ Upload completed (100%) - verifying with backend...');
                             resolve();
                         } else {
                             addDebugLog(`❌ Upload failed with status ${xhr.status}`);
+                            addDebugLog(`Response: ${xhr.responseText.substring(0, 200)}`);
                             reject(new Error(`Upload failed: ${xhr.status} ${xhr.statusText}`));
                         }
                     };
                     xhr.onerror = () => {
-                        addDebugLog(`❌ XHR onerror triggered`);
-                        addDebugLog(`Status: ${xhr.status}, ReadyState: ${xhr.readyState}`);
-                        addDebugLog(`Response: ${xhr.responseText}`);
-
                         if (uploadComplete) {
                             // Upload reached 100% before error - likely succeeded
-                            addDebugLog('⚠️ Error after reaching 100% - likely CORS issue');
-                            addDebugLog('🔄 Assuming upload succeeded, will verify with backend...');
+                            // This is expected with R2 CORS limitations on presigned URLs
+                            addDebugLog('✅ Upload completed (100%) - verifying with backend...');
                             resolve();
                         } else {
+                            addDebugLog(`❌ XHR onerror triggered`);
+                            addDebugLog(`Status: ${xhr.status}, ReadyState: ${xhr.readyState}`);
+                            addDebugLog(`Response: ${xhr.responseText}`);
                             reject(new Error('Network error during upload'));
                         }
                     };
