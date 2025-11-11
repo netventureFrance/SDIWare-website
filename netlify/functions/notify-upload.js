@@ -78,12 +78,15 @@ async function sendNewsletterEmails(version, sizeMB) {
     return 0;
   }
 
-  // Send email to each subscriber
+  // Send email to each subscriber and track recipients
   let sentCount = 0;
+  const notifiedUsers = [];
+
   for (const record of subscribers) {
     try {
       const fullName = record.get('Full Name');
       const email = record.get('Email');
+      const company = record.get('Company') || 'N/A';
 
       // Generate fresh download token for this version
       const downloadToken = generateToken();
@@ -151,6 +154,14 @@ To stop receiving update notifications, please reply to this email.
 
       await sgMail.send(msg);
       sentCount++;
+
+      // Track successful send
+      notifiedUsers.push({
+        name: fullName,
+        email: email,
+        company: company,
+      });
+
       console.log(`Newsletter sent to: ${email}`);
 
     } catch (emailError) {
@@ -159,7 +170,86 @@ To stop receiving update notifications, please reply to this email.
     }
   }
 
+  // Send summary email to support team
+  if (notifiedUsers.length > 0) {
+    await sendSupportSummary(version, notifiedUsers);
+  }
+
   return sentCount;
+}
+
+// Send summary email to support team
+async function sendSupportSummary(version, notifiedUsers) {
+  if (!SENDGRID_API_KEY || !NOTIFICATION_EMAIL) {
+    return;
+  }
+
+  const sgMail = require('@sendgrid/mail');
+  sgMail.setApiKey(SENDGRID_API_KEY);
+
+  // Build user list
+  let userList = '';
+  notifiedUsers.forEach((user, index) => {
+    userList += `${index + 1}. ${user.name}\n`;
+    userList += `   Email: ${user.email}\n`;
+    userList += `   Company: ${user.company}\n\n`;
+  });
+
+  const subject = `📧 Newsletter Sent: v${version} - ${notifiedUsers.length} Users Notified`;
+  const body = `
+Newsletter Distribution Report
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Version: ${version}
+Total Recipients: ${notifiedUsers.length}
+Sent: ${new Date().toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  })}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The following users have been notified about the new version:
+
+${userList}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Each user received:
+- Direct download link (48-hour expiry)
+- Version number: ${version}
+- Fresh download token
+
+You can track downloads in Airtable under "Last Downloaded Version" field.
+
+---
+This is an automated report from the SDIWare newsletter system.
+  `.trim();
+
+  const msg = {
+    to: NOTIFICATION_EMAIL,
+    from: {
+      email: 'info@sdiware.video',
+      name: 'SDIWare System'
+    },
+    replyTo: 'info@sdiware.video',
+    subject: subject,
+    text: body,
+    trackingSettings: {
+      clickTracking: {
+        enable: false,
+      },
+    },
+  };
+
+  try {
+    await sgMail.send(msg);
+    console.log('Support summary email sent to:', NOTIFICATION_EMAIL);
+  } catch (error) {
+    console.error('Failed to send support summary email:', error);
+  }
 }
 
 exports.handler = async (event, context) => {
