@@ -1,9 +1,15 @@
 const { S3Client, HeadObjectCommand, CopyObjectCommand } = require('@aws-sdk/client-s3');
+const Airtable = require('airtable');
 
 // Simple authentication
 const UPLOAD_SECRET = process.env.ADMIN_UPLOAD_SECRET;
 const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL;
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
+// Configure Airtable
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
+  process.env.AIRTABLE_BASE_ID
+);
 
 const r2Client = new S3Client({
   region: 'auto',
@@ -34,6 +40,126 @@ async function sendEmailViaSendGrid(subject, body) {
 
   await sgMail.send(msg);
   console.log('Email notification sent via SendGrid');
+}
+
+// Generate download token
+function generateToken() {
+  return require('crypto').randomBytes(32).toString('hex');
+}
+
+// Calculate expiration time (48 hours from now)
+function getExpirationTime() {
+  const now = new Date();
+  const expirationDate = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+  return expirationDate.toISOString();
+}
+
+// Send newsletter emails to all subscribers
+async function sendNewsletterEmails(version, sizeMB) {
+  if (!SENDGRID_API_KEY) {
+    console.log('SendGrid not configured, skipping newsletter');
+    return 0;
+  }
+
+  const sgMail = require('@sendgrid/mail');
+  sgMail.setApiKey(SENDGRID_API_KEY);
+
+  // Query Airtable for all subscribers (Newsletter = true)
+  const subscribers = await base(process.env.AIRTABLE_TABLE_NAME)
+    .select({
+      filterByFormula: '{Newsletter} = 1',
+      fields: ['Full Name', 'Email', 'Download Token', 'Token Expiration']
+    })
+    .all();
+
+  console.log(`Found ${subscribers.length} newsletter subscribers`);
+
+  if (subscribers.length === 0) {
+    return 0;
+  }
+
+  // Send email to each subscriber
+  let sentCount = 0;
+  for (const record of subscribers) {
+    try {
+      const fullName = record.get('Full Name');
+      const email = record.get('Email');
+
+      // Generate fresh download token for this version
+      const downloadToken = generateToken();
+      const expirationTime = getExpirationTime();
+
+      // Update Airtable record with new token
+      await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, {
+        'Download Token': downloadToken,
+        'Token Expiration': expirationTime,
+      });
+
+      // Send newsletter email
+      const downloadUrl = `https://sdiware.video/.netlify/functions/download/${downloadToken}`;
+
+      const subject = `🎉 New SDIWare Version Available: v${version}`;
+      const body = `
+Dear ${fullName},
+
+Great news! A new version of SDIWare is now available.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 New Version Available
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Version: ${version}
+Size: ${sizeMB} MB
+
+🔗 Download Link:
+${downloadUrl}
+
+⚠️ This download link expires in 48 hours.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Your 30-day trial continues - this is just an update to the latest version.
+
+If you have any questions, contact us at info@sdiware.video
+
+Best regards,
+The SDIWare Team
+
+netventure r&d SRL
+Via della Consolata 1bis
+I-10122 Torino, Italia
+
+---
+To stop receiving update notifications, please reply to this email.
+      `.trim();
+
+      const msg = {
+        to: email,
+        from: {
+          email: 'info@sdiware.video',
+          name: 'SDIWare Team'
+        },
+        replyTo: 'info@sdiware.video',
+        subject: subject,
+        text: body,
+        trackingSettings: {
+          clickTracking: {
+            enable: false,
+          },
+        },
+      };
+
+      await sgMail.send(msg);
+      sentCount++;
+      console.log(`Newsletter sent to: ${email}`);
+
+    } catch (emailError) {
+      console.error(`Failed to send newsletter to ${record.get('Email')}:`, emailError);
+      // Continue with other subscribers
+    }
+  }
+
+  return sentCount;
 }
 
 exports.handler = async (event, context) => {
@@ -137,6 +263,15 @@ This is an automated notification from the SDIWare upload system.
       `.trim();
 
       await sendEmailViaSendGrid(subject, body);
+    }
+
+    // Send newsletter emails to all subscribers
+    try {
+      const newsletterCount = await sendNewsletterEmails(version, sizeMB);
+      console.log(`Newsletter sent to ${newsletterCount} subscribers`);
+    } catch (newsletterError) {
+      console.error('Failed to send newsletter emails:', newsletterError);
+      // Continue anyway - admin was notified
     }
 
     return {

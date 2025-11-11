@@ -1,5 +1,5 @@
 const Airtable = require('airtable');
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, GetObjectCommand, HeadObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 // Configure Airtable
@@ -20,6 +20,23 @@ const r2Client = new S3Client({
 // R2 bucket and file details
 const BUCKET_NAME = 'sdiware';
 const FILE_KEY = 'SDIWare-Installer.exe';
+
+// Get current version from R2 metadata
+async function getCurrentVersion() {
+  try {
+    const command = new HeadObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: FILE_KEY,
+    });
+
+    const response = await r2Client.send(command);
+    const version = response.Metadata?.version || 'Unknown';
+    return version;
+  } catch (error) {
+    console.error('Error fetching version from R2:', error);
+    return 'Unknown';
+  }
+}
 
 exports.handler = async (event, context) => {
   // Extract token from URL path
@@ -104,12 +121,18 @@ exports.handler = async (event, context) => {
 
     console.log('Generated presigned URL (expires in 15 min)');
 
-    // Update status to Downloaded if not already
-    if (status !== 'Downloaded') {
-      await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, {
-        Status: 'Downloaded',
-      });
-    }
+    // Get current version from R2
+    const currentVersion = await getCurrentVersion();
+    console.log('Current version being downloaded:', currentVersion);
+
+    // Update status to Downloaded and track version
+    const updateFields = {
+      Status: 'Downloaded',
+      'Last Downloaded Version': currentVersion,
+    };
+
+    await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, updateFields);
+    console.log('Updated record with version:', currentVersion);
 
     // Return success page with auto-download
     return {
