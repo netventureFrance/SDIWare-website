@@ -1,4 +1,4 @@
-const { S3Client, HeadObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, HeadObjectCommand, CopyObjectCommand } = require('@aws-sdk/client-s3');
 
 // Simple authentication
 const UPLOAD_SECRET = process.env.ADMIN_UPLOAD_SECRET;
@@ -75,6 +75,24 @@ exports.handler = async (event, context) => {
     const lastModified = response.LastModified.toISOString();
 
     console.log('Upload confirmed:', version, sizeMB, 'MB');
+
+    // Update metadata (copy object to itself with new metadata)
+    const timestamp = new Date().toISOString();
+    const copyCommand = new CopyObjectCommand({
+      Bucket: 'sdiware',
+      CopySource: 'sdiware/SDIWare-Installer.exe',
+      Key: 'SDIWare-Installer.exe',
+      Metadata: {
+        'version': version,
+        'uploaded-by': uploadedBy,
+        'upload-date': timestamp,
+        'size-mb': sizeMB,
+      },
+      MetadataDirective: 'REPLACE',
+    });
+
+    await r2Client.send(copyCommand);
+    console.log('Metadata updated with version:', version);
 
     // Send notification email
     if (NOTIFICATION_EMAIL) {
