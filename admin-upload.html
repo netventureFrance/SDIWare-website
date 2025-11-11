@@ -108,14 +108,9 @@
         }
         .progress-fill {
             height: 100%;
-            background: #00d4aa;
+            background: linear-gradient(90deg, #00d4aa 0%, #00ffc8 100%);
             width: 0%;
             transition: width 0.3s ease;
-            animation: indeterminate 1.5s infinite;
-        }
-        @keyframes indeterminate {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(300%); }
         }
         .warning {
             background: #fff3cd;
@@ -278,53 +273,108 @@
             addDebugLog(`📦 File: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
             addDebugLog(`📝 Version: ${version}`);
             addDebugLog(`👤 Uploaded by: ${uploadedBy}`);
-            addDebugLog('⏳ Preparing request...');
 
             try {
-                addDebugLog('📤 Sending request to server...');
+                // Step 1: Get presigned upload URL from Netlify function
+                addDebugLog('⏳ Step 1/3: Requesting presigned upload URL...');
 
-                const response = await fetch('/.netlify/functions/admin-upload', {
+                const urlResponse = await fetch('/.netlify/functions/get-upload-url', {
                     method: 'POST',
-                    body: formData
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        secret: secret,
+                        version: version,
+                        uploadedBy: uploadedBy,
+                    })
                 });
 
-                addDebugLog(`📡 Response received: Status ${response.status} ${response.statusText}`);
-                addDebugLog(`📋 Content-Type: ${response.headers.get('content-type') || 'not set'}`);
+                addDebugLog(`📡 URL response: Status ${urlResponse.status}`);
+                const urlData = await urlResponse.json();
 
-                // Get response text first
-                const responseText = await response.text();
-                addDebugLog(`📄 Response body (${responseText.length} chars):`);
-                addDebugLog(responseText.substring(0, 500)); // First 500 chars
-
-                let data;
-                try {
-                    data = JSON.parse(responseText);
-                    addDebugLog('✅ Response parsed as JSON successfully');
-                } catch (e) {
-                    addDebugLog(`❌ Failed to parse JSON: ${e.message}`);
-                    addDebugLog(`Raw response: ${responseText}`);
-                    data = { error: 'Invalid response from server - not valid JSON' };
+                if (!urlResponse.ok || !urlData.success) {
+                    throw new Error(urlData.error || 'Failed to get upload URL');
                 }
 
-                if (response.ok && data.success) {
-                    const sizeMB = (data.size / 1024 / 1024).toFixed(2);
+                addDebugLog('✅ Presigned URL received');
+                const uploadUrl = urlData.uploadUrl;
+
+                // Step 2: Upload directly to R2 with progress tracking
+                addDebugLog('⏳ Step 2/3: Uploading directly to R2...');
+                uploadBtn.textContent = 'Uploading 0%...';
+
+                const xhr = new XMLHttpRequest();
+
+                // Track upload progress
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        uploadBtn.textContent = `Uploading ${percentComplete}%...`;
+                        progressFill.style.width = `${percentComplete}%`;
+                        addDebugLog(`📊 Upload progress: ${percentComplete}% (${(e.loaded / 1024 / 1024).toFixed(2)} MB / ${(e.total / 1024 / 1024).toFixed(2)} MB)`);
+                    }
+                });
+
+                // Upload promise
+                const uploadPromise = new Promise((resolve, reject) => {
+                    xhr.onload = () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve();
+                        } else {
+                            reject(new Error(`Upload failed: ${xhr.status} ${xhr.statusText}`));
+                        }
+                    };
+                    xhr.onerror = () => reject(new Error('Network error during upload'));
+                    xhr.ontimeout = () => reject(new Error('Upload timeout'));
+                });
+
+                xhr.open('PUT', uploadUrl);
+                xhr.setRequestHeader('Content-Type', 'application/x-msdownload');
+                xhr.send(file);
+
+                await uploadPromise;
+
+                addDebugLog('✅ File uploaded to R2 successfully!');
+                uploadBtn.textContent = 'Finalizing...';
+
+                // Step 3: Notify backend that upload completed
+                addDebugLog('⏳ Step 3/3: Sending notification...');
+
+                const notifyResponse = await fetch('/.netlify/functions/notify-upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        secret: secret,
+                        version: version,
+                        uploadedBy: uploadedBy,
+                        filename: file.name,
+                    })
+                });
+
+                const notifyData = await notifyResponse.json();
+                addDebugLog(`📧 Notification response: Status ${notifyResponse.status}`);
+
+                if (notifyResponse.ok && notifyData.success) {
+                    addDebugLog('✅ Notification sent successfully!');
                     addDebugLog('🎉 Upload completed successfully!');
-                    showMessage(`✅ Upload successful!\n\nVersion: ${data.version}\nFile: ${data.filename} (${sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification sent to admin.`, 'success');
+                    showMessage(`✅ Upload successful!\n\nVersion: ${version}\nFile: ${file.name} (${notifyData.sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification sent to ${NOTIFICATION_EMAIL || 'admin'}.`, 'success');
                     form.reset();
                     fileInfo.textContent = '';
                 } else {
-                    addDebugLog(`❌ Upload failed: ${data.error || 'Unknown error'}`);
-                    showMessage(`❌ Upload failed: ${data.error || 'Unknown error'}`, 'error');
+                    addDebugLog('⚠️ File uploaded but notification failed');
+                    showMessage(`✅ Upload successful!\n\nVersion: ${version}\nFile: ${file.name}\n\nThe new installer is live, but email notification may have failed.\n\nPlease check manually.`, 'success');
+                    form.reset();
+                    fileInfo.textContent = '';
                 }
 
             } catch (error) {
-                addDebugLog(`💥 Network error: ${error.message}`);
+                addDebugLog(`💥 Error: ${error.message}`);
                 addDebugLog(`Error stack: ${error.stack}`);
-                showMessage(`❌ Network error: ${error.message}\n\nPlease check your connection and try again.`, 'error');
+                showMessage(`❌ Upload failed: ${error.message}\n\nPlease try again or contact support.`, 'error');
             } finally {
                 uploadBtn.disabled = false;
                 uploadBtn.textContent = 'Upload to R2';
                 progress.style.display = 'none';
+                progressFill.style.width = '0%';
                 addDebugLog('✨ Upload process finished');
             }
         });
