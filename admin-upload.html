@@ -199,6 +199,12 @@
 
             <div class="message" id="message"></div>
         </form>
+
+        <!-- Debug Log -->
+        <div id="debugLogContainer" style="display: none; margin-top: 2rem;">
+            <h3 style="color: #00d4aa; margin-bottom: 1rem;">📋 Upload Debug Log</h3>
+            <div id="debugLog" style="background: #1a1a1a; color: #00ff00; padding: 1rem; border-radius: 0.5rem; font-family: 'Courier New', monospace; font-size: 0.875rem; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;"></div>
+        </div>
     </div>
 
     <script>
@@ -265,34 +271,61 @@
             progress.style.display = 'block';
             message.style.display = 'none';
 
+            // Clear and show debug log
+            clearDebugLog();
+            showDebugLog();
+            addDebugLog('🚀 Starting upload process...');
+            addDebugLog(`📦 File: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+            addDebugLog(`📝 Version: ${version}`);
+            addDebugLog(`👤 Uploaded by: ${uploadedBy}`);
+            addDebugLog('⏳ Preparing request...');
+
             try {
+                addDebugLog('📤 Sending request to server...');
+
                 const response = await fetch('/.netlify/functions/admin-upload', {
                     method: 'POST',
                     body: formData
                 });
 
+                addDebugLog(`📡 Response received: Status ${response.status} ${response.statusText}`);
+                addDebugLog(`📋 Content-Type: ${response.headers.get('content-type') || 'not set'}`);
+
+                // Get response text first
+                const responseText = await response.text();
+                addDebugLog(`📄 Response body (${responseText.length} chars):`);
+                addDebugLog(responseText.substring(0, 500)); // First 500 chars
+
                 let data;
                 try {
-                    data = await response.json();
+                    data = JSON.parse(responseText);
+                    addDebugLog('✅ Response parsed as JSON successfully');
                 } catch (e) {
-                    data = { error: 'Invalid response from server' };
+                    addDebugLog(`❌ Failed to parse JSON: ${e.message}`);
+                    addDebugLog(`Raw response: ${responseText}`);
+                    data = { error: 'Invalid response from server - not valid JSON' };
                 }
 
                 if (response.ok && data.success) {
                     const sizeMB = (data.size / 1024 / 1024).toFixed(2);
+                    addDebugLog('🎉 Upload completed successfully!');
                     showMessage(`✅ Upload successful!\n\nVersion: ${data.version}\nFile: ${data.filename} (${sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification sent to admin.`, 'success');
                     form.reset();
                     fileInfo.textContent = '';
                 } else {
+                    addDebugLog(`❌ Upload failed: ${data.error || 'Unknown error'}`);
                     showMessage(`❌ Upload failed: ${data.error || 'Unknown error'}`, 'error');
                 }
 
             } catch (error) {
+                addDebugLog(`💥 Network error: ${error.message}`);
+                addDebugLog(`Error stack: ${error.stack}`);
                 showMessage(`❌ Network error: ${error.message}\n\nPlease check your connection and try again.`, 'error');
             } finally {
                 uploadBtn.disabled = false;
                 uploadBtn.textContent = 'Upload to R2';
                 progress.style.display = 'none';
+                addDebugLog('✨ Upload process finished');
             }
         });
 
@@ -304,6 +337,29 @@
 
             // Scroll to message
             message.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Debug log functions
+        function showDebugLog() {
+            document.getElementById('debugLogContainer').style.display = 'block';
+        }
+
+        function hideDebugLog() {
+            document.getElementById('debugLogContainer').style.display = 'none';
+        }
+
+        function addDebugLog(text) {
+            const debugLog = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            debugLog.textContent += `[${timestamp}] ${text}\n`;
+            // Auto-scroll to bottom
+            debugLog.scrollTop = debugLog.scrollHeight;
+            // Also log to browser console
+            console.log(`[Upload Debug] ${text}`);
+        }
+
+        function clearDebugLog() {
+            document.getElementById('debugLog').textContent = '';
         }
     </script>
 </body>
