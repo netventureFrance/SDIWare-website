@@ -390,7 +390,7 @@
                 if (notifyResponse.ok && notifyData.success) {
                     addDebugLog('✅ Notification sent successfully!');
                     addDebugLog('🎉 Upload completed successfully!');
-                    showMessage(`✅ Upload successful!\n\nVersion: ${version}\nFile: ${file.name} (${notifyData.sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification sent to ${NOTIFICATION_EMAIL || 'admin'}.`, 'success');
+                    showMessage(`✅ Upload successful!\n\nVersion: ${version}\nFile: ${file.name} (${notifyData.sizeMB} MB)\n\nThe new installer is now live at https://sdiware.video\nNotification email sent to admin.`, 'success');
                     form.reset();
                     fileInfo.textContent = '';
                 } else {
