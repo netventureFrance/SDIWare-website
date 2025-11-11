@@ -66,14 +66,11 @@ exports.handler = async (event, context) => {
     const timestamp = new Date().toISOString();
 
     // Create presigned URL for upload (valid for 1 hour)
+    // NOTE: Do NOT include Metadata here - it causes signature mismatch
+    // Metadata will be added later in notify-upload.js using CopyObjectCommand
     const command = new PutObjectCommand({
       Bucket: 'sdiware',
       Key: 'SDIWare-Installer.exe',
-      Metadata: {
-        'version': version,
-        'uploaded-by': uploadedBy,
-        'upload-date': timestamp,
-      }
     });
 
     const uploadUrl = await getSignedUrl(r2Client, command, { expiresIn: 3600 });

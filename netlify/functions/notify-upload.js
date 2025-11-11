@@ -73,8 +73,18 @@ exports.handler = async (event, context) => {
     const response = await r2Client.send(headCommand);
     const sizeMB = (response.ContentLength / 1024 / 1024).toFixed(2);
     const lastModified = response.LastModified.toISOString();
+    const lastModifiedAge = Date.now() - new Date(lastModified).getTime();
 
     console.log('Upload confirmed:', version, sizeMB, 'MB');
+    console.log('File last modified:', lastModified);
+    console.log('File age (seconds):', Math.floor(lastModifiedAge / 1000));
+
+    // Check if file was recently modified (within last 60 seconds)
+    if (lastModifiedAge > 60000) {
+      console.warn('WARNING: File was last modified more than 60 seconds ago!');
+      console.warn('This suggests the upload may not have actually replaced the file.');
+      console.warn('Expected upload time: just now, Actual last modified:', lastModified);
+    }
 
     // Update metadata (copy object to itself with new metadata)
     const timestamp = new Date().toISOString();
