@@ -211,8 +211,8 @@ window.addEventListener('scroll', () => {
 
 // Keyboard navigation for language selector
 document.addEventListener('keydown', (e) => {
-    if (e.key >= '1' && e.key <= '6') {
-        const langs = ['en', 'fr', 'de', 'es', 'it', 'ja'];
+    if (e.key >= '1' && e.key <= '7') {
+        const langs = ['en', 'fr', 'de', 'es', 'it', 'ja', 'ar'];
         const index = parseInt(e.key) - 1;
         if (langs[index]) {
             switchLanguage(langs[index]);
