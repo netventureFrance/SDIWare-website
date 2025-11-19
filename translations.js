@@ -1239,6 +1239,161 @@ const translations = {
             disclaimer: "إخلاء المسؤولية",
             disclaimer_text: "تم إنشاء محتوى هذا الموقع بأقصى قدر من العناية. ومع ذلك، لا يمكننا ضمان دقة واكتمال وحداثة المحتوى."
         }
+    },
+    nb: {
+        nav: {
+            home: "Hjem",
+            features: "Funksjoner",
+            contact: "Kontakt",
+            useCases: "Bruksområder",
+            partners: "Partnere",
+            download: "Last ned",
+            api: "API",
+            impressum: "Bedriftsinformasjon"
+        },
+        hero: {
+            titlePrefix: "Profesjonell",
+            titleSuffix: "Konvertering",
+            subtitle: "Avansert programvareløsning for sømløs konvertering mellom SDI- og NDI-formater",
+            feature1: "Minimal Latens",
+            feature2: "10-bit HDR",
+            feature3: "Alfakanal",
+            feature4: "Multi-Lyd",
+            feature5: "Intercom",
+            cta1: "Last ned",
+            cta2: "Les mer"
+        },
+        formats: {
+            sdi: "SDI",
+            ndi: "NDI",
+            ip2110: "2110 IP",
+            webrtc: "WebRTC",
+            srt: "SRT",
+            cef: "CEF"
+        },
+        features: {
+            title: "Hovedfunksjoner",
+            latency: {
+                title: "Ultra-lav latens",
+                desc: "Sanntidskonvertering med minimal forsinkelse, perfekt for live produksjonsmiljøer"
+            },
+            alpha: {
+                title: "Alfakanal-støtte",
+                desc: "Full gjennomsiktighet for profesjonelle grafikk- og overlay-arbeidsflyter"
+            },
+            hdr: {
+                title: "10-bit HDR",
+                desc: "Høy dynamisk rekkevidde med 10-bit fargedybde for overlegen bildekvalitet"
+            },
+            audio: {
+                title: "Flerkanals lyd",
+                desc: "Omfattende lydstøtte for komplekse kringkastingsscenarier"
+            },
+            tally: {
+                title: "Tally-integrasjon",
+                desc: "Innebygde tally-funksjoner for sømløs produksjonsarbeidsflyt-integrasjon"
+            },
+            preview: {
+                title: "Program og forhåndsvisning",
+                desc: "Dobbel signalhåndtering for både program- og forhåndsvisningsfeeder"
+            },
+            cef_webrtc: {
+                title: "CEF & WebRTC",
+                desc: "Dekod hvilken som helst Chromium Embedded Framework HTML-renderer eller nettsted til et direkte kringkastingssignal (fylling og nøkkel). Send videoinput tilbake til HTML-rendereren via WebRTC"
+            }
+        },
+        useCases: {
+            title: "Bruksområder",
+            subtitle: "SDIWare tilpasser seg ditt produksjonsmiljø",
+            studio: {
+                title: "Live studioproduksjon",
+                desc1: "SDI-Ware forvandler nettbaserte grafikkmotor som SPX til kringkastingsklare systemer. Konverter HTML5-grafikk til SDI/NDI/2110-utgang med profesjonelle funksjoner inkludert tally-støtte, intercom og retur-videofeed—alt gjennom et intuitivt nettgrensesnitt. Full 4K HDR-støtte for neste generasjons produksjonsstandarder.",
+                desc2: "Distribuer HTML5-grafikkmotor direkte til flerkamera studiomiljøer med full kringkastingsintegrasjon. SDI-Ware gir tally på skjermen, ekstern tally-lyskontroll og retur-videofeed (RET) slik at kameraoperatører ser programutgangen i søkerne sine.",
+                desc3: "Kombiner SDI fylling- og nøkkelsignaler til en enkelt NDI-strøm med alfakanal-støtte. Utgang via tradisjonell SDI, NDI eller SMPTE ST 2110 for IP-baserte anlegg. Innfødt 4K HDR arbeidsflyt-støtte sikrer at grafikken matcher kvaliteten til moderne kamerasystemer."
+            },
+            broadcast: {
+                title: "Utesendings produksjon",
+                desc1: "Erstatt racks med spesialisert utstyr med kompakte, programvarebaserte løsninger. Monter en enkeltkortscomputer bak kamerasøkeren for et komplett on-camera grafikk- og kodingssystem—nøyaktig som bevist under 174 timer med live produksjon ved ISU Grand Prix kunstløp.",
+                desc2: "Maskinvareuavhengig design støtter BMD Decklink, Magewell og andre opptagelseskort. Innebygd intercom med trykk-for-å-snakke, ekstern tally via Arduino-grensesnitt og nettverkskonfigurasjon gjennom nettgrensesnittet betyr raskere oppsett og færre kabler i felten. 4K HDR-utgang for fremtidssikre produksjoner."
+            },
+            corporate: {
+                title: "Live bedriftsarrangementer",
+                desc1: "Bring kringkastingskvalitets produksjon til bedriftskommunikasjon uten å kreve kringkastingsekspertise. Bymøter, produktlanseringer, investorpresentasjoner og treningsøkter får profesjonell polering gjennom HTML5-grafikk som nettutv iklerne dine kan lage og endre i sanntid. Ingen spesialiserte grafikkoperatører nødvendig—kontroller alt gjennom kjente nettgrensesnitt.",
+                desc2: "<a href=\"https://www.mmgaxis.io\" target=\"_blank\" rel=\"noopener noreferrer\">MMG Axis</a> er en høyytende, rackmontert AV-enhet designet for å være hjertet av AV over IP-produksjon, som kobler SDI arbeidsflyter med moderne NDI®️-baserte IP-produksjonssystemer. Den fungerer som din svitsjer, signalkonvertering, NDI-bro, vMix-maskin, TriCaster-maskin, live streaming og fjernproduksjonskraftverk. Med fire toveis 3G-SDI-porter (med lyd embed/de-embed), 4 skjermporter, 10 GbE og 2,5 GbE nettverksgrensesnitt (pluss WiFi 7), støtter den sanntids SDI↔️NDI-konvertering med ULTRA LAV latens—koding eller dekoding på under 30ms. Arkitekturen behandler opptil 94 NDI-er ved 1080p 60fps eller lavere volumer ved høyere oppløsninger som 4K eller 8K. Den integreres naturlig med vMix, OBS, TriCaster og Dante, optimalisert og åpen for deg å installere og kjøre programvare. Egnet for personlig, hybrid og virtuell AV-produksjon, kringkastingsstudioer, live-eventlokaler, fjernproduksjon, utdanning og bedriftsstreaming.",
+                desc3: "SpeedHQ-koding sikrer lav latens for live interaksjon, mens NDI eller ST 2110-utgang integreres sømløst med moderne produksjonssvitsjere og strømme plattformer. Full 4K HDR-støtte gir premium visuell kvalitet for ledernivåpresentasjoner. Distribuer på mmagaxis.io maskinvare for validerte, produksjonsklare systemer, eller integrer SDI-Ware i din eksisterende infrastruktur."
+            },
+            remote: {
+                title: "Fjernstyrt og sky-produksjon",
+                desc1: "Aktiver distribuerte arbeidsflyter hvor grafikk, kameraer og kontrollrom eksisterer på forskjellige steder. Kjør SDI-Ware på skyservere eller eksterne arbeidsstasjoner, med NDI eller SMPTE ST 2110 transport som eliminerer behovet for dedikert videoinfrastruktur.",
+                desc2: "Konfigurer alle innstillinger—NDI-strømmer, 2110-flyter, nettverksparametere, lydruting, PiP-posisjonering—gjennom nettgrensesnittet uten å berøre maskinvaren. Kompatibel med NDI Bridge for å kjøre flere instanser på samme maskin.",
+                desc3: "Perfekt for hjemmestudioer, flerlokasjonsproduksjoner eller hybride arbeidsflyter som kombinerer lokale og skyressurser. Skaler fra HD til 4K HDR etter som båndbredde og krav utvikler seg."
+            }
+        },
+        partners: {
+            title: "Teknologipartnere",
+            subtitle: "Pålitelige integrasjoner med bransjens ledende plattformer"
+        },
+        download: {
+            title: "Last ned SDIWare",
+            subtitle: "Be om din 30-dagers prøveperiode (nedlastingslenke gyldig i 48 timer)",
+            pdfTitle: "Produktinformasjon",
+            pdfDesc: "Last ned vår detaljerte presentasjon for å lære mer om SDIWare funksjoner og spesifikasjoner",
+            pdfButton: "Last ned PDF",
+            form: {
+                name: "Fullt navn",
+                email: "E-postadresse",
+                company: "Firmanavn",
+                role: "Din rolle",
+                useCase: "Tiltenkt bruksområde",
+                selectOption: "-- Velg et alternativ --",
+                liveStudio: "Live studioproduksjon",
+                obVan: "Utesendings / OB-bil",
+                corporateEvents: "Bedriftsarrangementer",
+                remoteProduction: "Fjernstyrt/sky-produksjon",
+                other: "Annet",
+                gdprConsent: "Jeg godtar behandling av mine personopplysninger og aksepterer personvernreglene",
+                newsletter: "Jeg ønsker å motta oppdateringer om SDIWare (valgfritt)",
+                submit: "Be om nedlastingslenke"
+            },
+            info: {
+                trial: {
+                    title: "30-dagers prøveperiode",
+                    desc: "Fullt funksjonell prøveversjon uten begrensninger. Perfekt for testing i ditt produksjonsmiljø."
+                },
+                instant: {
+                    title: "Umiddelbar tilgang",
+                    desc: "Motta nedlastingslenken din via e-post innen få minutter. Ingen kredittkort nødvendig."
+                },
+                support: {
+                    title: "Support inkludert",
+                    desc: "Få teknisk support i prøveperioden for å sikre jevn installasjon og drift."
+                }
+            }
+        },
+        contact: {
+            title: "Ta kontakt",
+            text: "Interessert i SDIWare? Kontakt oss for lisensiering, support eller mer informasjon."
+        },
+        impressum: {
+            title: "Bedriftsinformasjon",
+            company: "Bedriftsinformasjon",
+            legal_form: "Aksjeselskap",
+            managing_director: "Administrerende direktør",
+            registered_office: "Registrert kontor",
+            contact_heading: "Kontakt",
+            email_label: "E-post",
+            web_label: "Nettside",
+            legal: "Juridisk informasjon",
+            vat: "MVA-nummer / P.IVA",
+            rea: "REA-nummer",
+            share_capital: "Aksjekapital",
+            paid_in: "fullt innbetalt",
+            single_shareholder: "Enkeltaksjonærselskap",
+            yes_no: "[Ja/Nei]",
+            no: "Nei",
+            disclaimer: "Ansvarsfraskrivelse",
+            disclaimer_text: "Innholdet på dette nettstedet er opprettet med største mulig omhu. Vi kan imidlertid ikke garantere nøyaktigheten, fullstendigheten og aktualiteten til innholdet."
+        }
     }
 };
 
