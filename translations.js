@@ -924,6 +924,160 @@ const translations = {
             disclaimer_text: "このウェブサイトのコンテンツは、最大限の注意を払って作成されています。ただし、コンテンツの正確性、完全性、最新性を保証することはできません。"
         }
     },
+    fi: {
+        nav: {
+            home: "Etusivu",
+            features: "Ominaisuudet",
+            contact: "Ota yhteyttä",
+            useCases: "Käyttötapaukset",
+            partners: "Kumppanit",
+            download: "Lataa",
+            impressum: "Yritystiedot"
+        },
+        hero: {
+            titlePrefix: "Ammattimainen",
+            titleSuffix: "Muunnos",
+            subtitle: "Edistynyt ohjelmistoratkaisu saumattomaan muunnokseen SDI- ja NDI-formaattien välillä",
+            feature1: "Minimaalinen Viive",
+            feature2: "10-bittinen HDR",
+            feature3: "Alfakanava",
+            feature4: "Moniääni",
+            feature5: "Sisäpuhelin",
+            cta1: "Lataa",
+            cta2: "Lue lisää"
+        },
+        formats: {
+            sdi: "SDI",
+            ndi: "NDI",
+            ip2110: "2110 IP",
+            webrtc: "WebRTC",
+            srt: "SRT",
+            cef: "CEF"
+        },
+        features: {
+            title: "Tärkeimmät ominaisuudet",
+            latency: {
+                title: "Erittäin alhainen viive",
+                desc: "Reaaliaikainen muunnos minimaalisella viiveellä, täydellinen live-tuotantoympäristöihin"
+            },
+            alpha: {
+                title: "Alfakanavan tuki",
+                desc: "Täysi läpinäkyvyyden tuki ammattimaisiin grafiikka- ja overlay-työnkulkuihin"
+            },
+            hdr: {
+                title: "10-bittinen HDR",
+                desc: "Korkea dynaaminen alue 10-bittisellä värisyvyydellä ylivoimaiseen kuvanlaatuun"
+            },
+            audio: {
+                title: "Monikanavainen ääni",
+                desc: "Kattava äänituki monimutkaisiin lähetysskenaarioihin"
+            },
+            tally: {
+                title: "Tally-integraatio",
+                desc: "Sisäänrakennetut tally-ominaisuudet saumattomaan tuotantotyönkulkuun"
+            },
+            preview: {
+                title: "Ohjelma ja esikatselu",
+                desc: "Kaksinkertainen signaalinkäsittely sekä ohjelma- että esikatselusyötteille"
+            },
+            cef_webrtc: {
+                title: "CEF & WebRTC",
+                desc: "Dekoodaa mikä tahansa Chromium Embedded Framework HTML-renderöinti tai verkkosivusto live-lähetyssignaaliksi (täyttö ja avain). Lähetä videosyöte takaisin HTML-renderöintiin WebRTC:n kautta"
+            }
+        },
+        useCases: {
+            title: "Käyttötapaukset",
+            subtitle: "SDIWare mukautuu tuotantoympäristöösi",
+            studio: {
+                title: "Live-studiotuotanto",
+                desc1: "SDI-Ware muuntaa verkkopohjaiset grafiikkamoottorit, kuten SPX:n, lähetysvalmiiksi järjestelmiksi. Muunna HTML5-grafiikka SDI/NDI/2110-lähdöiksi ammattimaisilla ominaisuuksilla, kuten tally-tuki, sisäpuhelin ja paluuvideosyöte—kaikki intuitiivisen verkkokäyttöliittymän kautta. Täysi 4K HDR -tuki seuraavan sukupolven tuotantostandardeille.",
+                desc2: "Ota käyttöön HTML5-grafiikkamoottorit suoraan monikaameraisiin studioympäristöihin täydellä lähetysintegraatiolla. SDI-Ware tarjoaa näytöllä näkyvän tallyn, ulkoisen tally-valon ohjauksen ja paluuvideosyötteen (RET), jotta kameraoperaattorit näkevät ohjelmalähdön etsimissään.",
+                desc3: "Yhdistä SDI fill- ja key-signaalit yhdeksi NDI-virtaukseksi alfakanavan tuella. Lähtö perinteisen SDI:n, NDI:n tai SMPTE ST 2110:n kautta IP-pohjaisiin laitoksiin. Natiivi 4K HDR -työnkulun tuki varmistaa, että grafiikkasi vastaa nykyaikaisten kamerajärjestelmien laatua."
+            },
+            broadcast: {
+                title: "Ulkolähetystuotanto",
+                desc1: "Korvaa erikoislaitteiden telineet kompakteilla ohjelmistopohjaisilla ratkaisuilla. Asenna yhden piirilevyn tietokone kameran etsimen taakse täydelliseksi kameralla olevaksi grafiikka- ja koodausjärjestelmäksi—täsmälleen kuten todistettiin 174 tunnin live-tuotannon aikana ISU Grand Prix -taitoluistelussa.",
+                desc2: "Laitteistoriippumaton suunnittelu tukee BMD Decklinkia, Magewellia ja muita kaappauskortteja. Sisäänrakennettu sisäpuhelin painikkeella puhumiseen, ulkoinen tally Arduino-liitännän kautta ja verkon määritys verkkokäyttöliittymän kautta tarkoittavat nopeampaa asennusta ja vähemmän kaapeleita kentällä. 4K HDR -lähtö tulevaisuudenvarmaan tuotantoon."
+            },
+            corporate: {
+                title: "Live-yritystapahtumia",
+                desc1: "Tuo lähetyslaadun tuotanto yritysviestintään ilman lähetysosaamista. Kaupunkikokoukset, tuotelanseeraukset, sijoittajaesitykset ja koulutustilaisuudet saavat ammattimaisen kiillon HTML5-grafiikan kautta, jota verkkokehittäjäsi voivat luoda ja muokata reaaliajassa. Erikoistuneita grafiikkaoperaattoreita ei tarvita—hallitse kaikkea tuttujen verkkokäyttöliittymien kautta.",
+                desc2: "<a href=\"https://www.mmgaxis.io\" target=\"_blank\" rel=\"noopener noreferrer\">MMG Axis</a> on tehokas, telineeseen asennettava AV-laite, joka on suunniteltu AV over IP -tuotannon sydämeksi, yhdistäen SDI-työnkulut nykyaikaisiin NDI®️-pohjaisiin IP-tuotantojärjestelmiin. Se toimii kytkinlaitteenasi, signaalinmuuntimena, NDI-siltana, vMix-koneena, TriCaster-koneena, suoratoiston ja etätuotannon voimapakettina. Neljällä kaksisuuntaisella 3G-SDI-portilla (äänen upotuksella/purkamisella), 4 näyttöportilla, 10 GbE- ja 2,5 GbE -verkkoliitännöillä (plus WiFi 7) se tukee reaaliaikaista SDI↔️NDI-muunnosta ERITTÄIN ALHAISELLA viiveellä—koodaus tai dekoodaus alle 30 ms:ssa. Arkkitehtuuri käsittelee jopa 94 NDI:tä 1080p 60fps:llä tai pienempiä määriä korkeammilla resoluutioilla, kuten 4K tai 8K. Se integroituu natiivisti vMixin, OBS:n, TriCasterin ja Danten kanssa, optimoitu ja jätetty avoimeksi sinulle ohjelmiston asennusta ja käyttöä varten. Sopii henkilökohtaiseen, hybridiin ja virtuaaliseen AV-tuotantoon, lähetysstudioihin, live-tapahtumapaikkoihin, etätuotantoon, koulutukseen ja yrityssuoratoistoon.",
+                desc3: "SpeedHQ-koodaus varmistaa alhaisen viiveen live-vuorovaikutukseen, kun taas NDI- tai ST 2110 -lähtö integroituu saumattomasti nykyaikaisiin tuotantokytkimiin ja suoratoistoalustoihin. Täysi 4K HDR -tuki tarjoaa premium-visuaalista laatua johdon tason esityksiin. Ota käyttöön mmagaxis.io-laitteistolla validoiduissa, tuotantovalmiissa järjestelmissä tai integroi SDI-Ware olemassa olevaan infrastruktuuriisi."
+            },
+            remote: {
+                title: "Etä- ja pilvipalvelutuotanto",
+                desc1: "Mahdollista hajautetut työnkulut, joissa grafiikka, kamerat ja ohjaamot ovat eri paikoissa. Aja SDI-Warea pilvipalvelimilla tai etätyöasemilla, NDI- tai SMPTE ST 2110 -kuljetuksella, mikä poistaa tarpeen omistettuun videoinfrastruktuuriin.",
+                desc2: "Määritä kaikki asetukset—NDI-virrat, 2110-virrat, verkkoparametrit, äänireititys, PiP-sijoittelu—verkkokäyttöliittymän kautta koskematta laitteistoon. Yhteensopiva NDI Bridgen kanssa useiden instanssien ajamiseen samalla koneella.",
+                desc3: "Täydellinen kotistudioille, monisivuston tuotannoille tai hybridityönkuluille, jotka yhdistävät paikan päällä olevat ja pilviresurssit. Skaalaa HD:stä 4K HDR:ään kaistanleveyden ja vaatimusten kehittyessä."
+            }
+        },
+        partners: {
+            title: "Teknologiakumppanit",
+            subtitle: "Luotettavat integraatiot alan johtavien alustojen kanssa"
+        },
+        download: {
+            title: "Lataa SDIWare",
+            subtitle: "Pyydä 30 päivän kokeilujakso (latauslinkki voimassa 48 tuntia)",
+            pdfTitle: "Tuotetiedot",
+            pdfDesc: "Lataa yksityiskohtainen esityksemme saadaksesi lisätietoja SDIWaren ominaisuuksista ja tekniikasta",
+            pdfButton: "Lataa PDF",
+            form: {
+                name: "Koko nimi",
+                email: "Sähköpostiosoite",
+                company: "Yrityksen nimi",
+                role: "Roolisi",
+                useCase: "Suunniteltu käyttötarkoitus",
+                selectOption: "-- Valitse vaihtoehto --",
+                liveStudio: "Live-studiotuotanto",
+                obVan: "Ulkolähetys / OB-auto",
+                corporateEvents: "Yritystapahtumia",
+                remoteProduction: "Etä-/pilvipalvelutuotanto",
+                other: "Muu",
+                gdprConsent: "Hyväksyn henkilötietojeni käsittelyn ja hyväksyn tietosuojakäytännön",
+                newsletter: "Haluan vastaanottaa päivityksiä SDIWaresta (valinnainen)",
+                submit: "Pyydä latauslinkki"
+            },
+            info: {
+                trial: {
+                    title: "30 päivän kokeilu",
+                    desc: "Täysin toimiva kokeiluversio ilman rajoituksia. Täydellinen testaukseen tuotantoympäristössäsi."
+                },
+                instant: {
+                    title: "Välitön pääsy",
+                    desc: "Saat latauslinkin sähköpostitse muutamassa minuutissa. Luottokorttia ei tarvita."
+                },
+                support: {
+                    title: "Tuki sisältyy",
+                    desc: "Saat teknisen tuen kokeilujaksosi aikana sujuvan asennuksen ja toiminnan varmistamiseksi."
+                }
+            }
+        },
+        contact: {
+            title: "Ota yhteyttä",
+            text: "Kiinnostunut SDIWaresta? Ota meihin yhteyttä lisenssien, tuen tai lisätietojen saamiseksi."
+        },
+        impressum: {
+            title: "Yritystiedot",
+            company: "Yritystiedot",
+            legal_form: "Osakeyhtiö",
+            managing_director: "Toimitusjohtaja",
+            registered_office: "Rekisteröity toimipaikka",
+            contact_heading: "Yhteystiedot",
+            email_label: "Sähköposti",
+            web_label: "Verkkosivusto",
+            legal: "Oikeudelliset tiedot",
+            vat: "ALV-numero / P.IVA",
+            rea: "REA-numero",
+            share_capital: "Osakepääoma",
+            paid_in: "täysin maksettu",
+            single_shareholder: "Yhden osakkeenomistajan yritys",
+            yes_no: "[Kyllä/Ei]",
+            no: "Ei",
+            disclaimer: "Vastuuvapauslauseke",
+            disclaimer_text: "Tämän verkkosivuston sisältö on luotu mahdollisimman huolellisesti. Emme kuitenkaan voi taata sisällön tarkkuutta, täydellisyyttä ja ajantasaisuutta."
+        }
+    },
     ar: {
         nav: {
             home: "الرئيسية",
