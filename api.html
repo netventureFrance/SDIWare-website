@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>SDIWare API Documentation | WebDecoder REST API</title>
+    <meta name="title" content="SDIWare API Documentation | WebDecoder REST API">
+    <meta name="description" content="Complete REST API documentation for SDIWare WebDecoder. Control web-based video decoders, convert URLs to SDI output with simple HTTP endpoints.">
+    <meta name="keywords" content="SDIWare API, WebDecoder API, REST API, video decoder API, SDI API, broadcast automation API">
+    <meta name="author" content="SDIWare">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.sdiware.video/api.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="main.min.css">
+
+    <style>
+        .api-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .api-header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 3rem;
+            border-radius: 10px;
+        }
+
+        .api-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .construction-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .api-section {
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .api-section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .api-section h3 {
+            color: #764ba2;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .endpoint-path {
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            color: #f8f8f2;
+            padding: 0;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .param-table th,
+        .param-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .param-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .param-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .required {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="SDIWare Logo" class="logo-icon">
+                    <span class="logo-text">SDIWare</span>
+                </div>
+                <nav class="nav-menu" role="navigation" aria-label="Main navigation">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#use-cases">Use Cases</a>
+                    <a href="index.html#partners">Partners</a>
+                    <a href="api.html" class="active">API</a>
+                    <a href="index.html#download">Download</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="api-container">
+        <!-- API Header -->
+        <div class="api-header">
+            <div class="construction-badge">🚧 UNDER DEVELOPMENT</div>
+            <h1>SDIWare API Documentation</h1>
+            <p>WebDecoder Public API - REST Interface for Video Decoder Control</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#endpoints">API Endpoints</a>
+                    <ul>
+                        <li><a href="#start-decoder">Start WebDecoder</a></li>
+                        <li><a href="#stop-decoder">Stop WebDecoder</a></li>
+                        <li><a href="#update-url">Update URL</a></li>
+                    </ul>
+                </li>
+                <li><a href="#data-models">Data Models</a></li>
+                <li><a href="#errors">Error Responses</a></li>
+                <li><a href="#examples">Examples</a></li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <section id="overview" class="api-section">
+            <h2>Overview</h2>
+            <p>The WebDecoder API provides a simple REST interface for external applications to control web-based video decoders. This API allows you to decode web content (URLs) and output to SDI hardware using simple integer-based indexing.</p>
+
+            <p><strong>Base URL:</strong> <code>http://your-server:port/api/WebDecoder</code></p>
+            <p><strong>Content-Type:</strong> <code>application/json</code></p>
+        </section>
+
+        <!-- Getting Started -->
+        <section id="getting-started" class="api-section">
+            <h2>Getting Started</h2>
+
+            <h3>Device and Port Indexing</h3>
+            <p>The API uses simple zero-based integer indices instead of internal device IDs:</p>
+            <ul>
+                <li><strong>Device Index:</strong> <code>0</code> = first/top device, <code>1</code> = second device, etc.</li>
+                <li><strong>Output Index:</strong> <code>0</code> = first available output port, <code>1</code> = second available output, etc.</li>
+            </ul>
+
+            <div class="note">
+                <strong>Note:</strong> Only available (inactive) output ports are counted in the indexing. Active ports are excluded from the index count.
+            </div>
+        </section>
+
+        <!-- API Endpoints -->
+        <section id="endpoints" class="api-section">
+            <h2>API Endpoints</h2>
+
+            <!-- Start WebDecoder -->
+            <div id="start-decoder">
+                <h3>Start WebDecoder</h3>
+                <p>Start a web decoder on a specific device and output port.</p>
+
+                <div class="endpoint">
+                    <span class="endpoint-method">POST</span>
+                    <span class="endpoint-path">/api/WebDecoder/simple/start</span>
+                </div>
+
+                <h4>Request Body</h4>
+                <pre><code>{
+  "deviceIndex": 0,
+  "outputIndex": 0,
+  "url": "https://example.com",
+  "width": 1920,
+  "height": 1080,
+  "framerate": 50.0,
+  "interlacedOutput": true,
+  "enableKey": true
+}</code></pre>
+
+                <h4>Parameters</h4>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>deviceIndex</code></td>
+                            <td>integer</td>
+                            <td class="required">Yes</td>
+                            <td>0</td>
+                            <td>Device index (0 = first device)</td>
+                        </tr>
+                        <tr>
+                            <td><code>outputIndex</code></td>
+                            <td>integer</td>
+                            <td class="required">Yes</td>
+                            <td>0</td>
+                            <td>Output port index (0 = first available output)</td>
+                        </tr>
+                        <tr>
+                            <td><code>url</code></td>
+                            <td>string</td>
+                            <td class="required">Yes</td>
+                            <td>-</td>
+                            <td>URL to decode (e.g., https://example.com)</td>
+                        </tr>
+                        <tr>
+                            <td><code>width</code></td>
+                            <td>integer</td>
+                            <td class="required">Yes</td>
+                            <td>1920</td>
+                            <td>Video width in pixels (must be > 0)</td>
+                        </tr>
+                        <tr>
+                            <td><code>height</code></td>
+                            <td>integer</td>
+                            <td class="required">Yes</td>
+                            <td>1080</td>
+                            <td>Video height in pixels (must be > 0)</td>
+                        </tr>
+                        <tr>
+                            <td><code>framerate</code></td>
+                            <td>number</td>
+                            <td class="required">Yes</td>
+                            <td>50.0</td>
+                            <td>Framerate in fps (must be > 0)</td>
+                        </tr>
+                        <tr>
+                            <td><code>interlacedOutput</code></td>
+                            <td>boolean</td>
+                            <td>No</td>
+                            <td>false</td>
+                            <td>Enable interlaced output (false = progressive)</td>
+                        </tr>
+                        <tr>
+                            <td><code>enableKey</code></td>
+                            <td>boolean</td>
+                            <td>No</td>
+                            <td>false</td>
+                            <td>Enable fill+key output (uses 2 consecutive ports)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="note">
+                    <strong>Fill+Key Mode:</strong> When <code>enableKey</code> is <code>true</code>:
+                    <ul>
+                        <li>Two consecutive output ports are paired automatically</li>
+                        <li><code>outputIndex</code> specifies the fill port (first port)</li>
+                        <li>The next consecutive port is used for the key (alpha channel)</li>
+                        <li>Both ports must be available</li>
+                    </ul>
+                </div>
+
+                <h4>Success Response (HTTP 200)</h4>
+                <pre><code>{
+  "message": "WebDecoder started successfully",
+  "deviceIndex": 0,
+  "deviceId": "DeckLink_4K_Extreme_12G_00000000",
+  "deviceInfo": "Blackmagic DeckLink 4K Extreme 12G",
+  "outputIndex": 0,
+  "outputPorts": [2, 3],
+  "mode": "Fillkey",
+  "usedOutputs": 2,
+  "settings": {
+    "url": "https://example.com",
+    "resolution": "1920x1080",
+    "framerate": 50.0,
+    "interlaced": false,
+    "keyOutput": true
+  }
+}</code></pre>
+
+                <h4>Error Responses</h4>
+                <ul>
+                    <li><strong>400 Bad Request:</strong> Invalid parameters (missing URL, invalid dimensions, etc.)</li>
+                    <li><strong>404 Not Found:</strong> Device or output port not found, or insufficient ports for fill+key</li>
+                    <li><strong>500 Internal Server Error:</strong> Server error</li>
+                </ul>
+            </div>
+
+            <!-- Stop WebDecoder -->
+            <div id="stop-decoder">
+                <h3>Stop WebDecoder</h3>
+                <p>Stop a running web decoder on a specific device and output port.</p>
+
+                <div class="endpoint">
+                    <span class="endpoint-method">POST</span>
+                    <span class="endpoint-path">/api/WebDecoder/simple/stop/{deviceIndex}/{outputIndex}</span>
+                </div>
+
+                <h4>URL Parameters</h4>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>deviceIndex</code></td>
+                            <td>integer</td>
+                            <td>Device index (0 = first device)</td>
+                        </tr>
+                        <tr>
+                            <td><code>outputIndex</code></td>
+                            <td>integer</td>
+                            <td>Output index of the active decoder to stop</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="note">
+                    <strong>Note:</strong> Use the <strong>active decoder index</strong>, not the available port index. Active decoders are indexed separately (0 = first active decoder, 1 = second active decoder).
+                </div>
+
+                <h4>Success Response (HTTP 200)</h4>
+                <pre><code>{
+  "message": "WebDecoder stopped successfully",
+  "deviceIndex": 0,
+  "deviceId": "DeckLink_4K_Extreme_12G_00000000",
+  "outputIndex": 0,
+  "stoppedPorts": [2, 3],
+  "mode": "Fillkey"
+}</code></pre>
+            </div>
+
+            <!-- Update URL -->
+            <div id="update-url">
+                <h3>Update URL</h3>
+                <p>Update the URL of a running web decoder without stopping/restarting (seamless transition).</p>
+
+                <div class="endpoint">
+                    <span class="endpoint-method">POST</span>
+                    <span class="endpoint-path">/api/WebDecoder/simple/update-url/{deviceIndex}/{outputIndex}</span>
+                </div>
+
+                <h4>URL Parameters</h4>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>deviceIndex</code></td>
+                            <td>integer</td>
+                            <td>Device index (0 = first device)</td>
+                        </tr>
+                        <tr>
+                            <td><code>outputIndex</code></td>
+                            <td>integer</td>
+                            <td>Output index of the active decoder to update</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Request Body</h4>
+                <pre><code>{
+  "url": "https://new-url.com"
+}</code></pre>
+
+                <div class="note">
+                    <strong>Note:</strong> All other settings (resolution, framerate, interlaced mode, key mode) are preserved from the current configuration.
+                </div>
+
+                <h4>Success Response (HTTP 200)</h4>
+                <pre><code>{
+  "message": "WebDecoder URL updated successfully",
+  "deviceIndex": 0,
+  "deviceId": "DeckLink_4K_Extreme_12G_00000000",
+  "outputIndex": 0,
+  "updatedPorts": [2, 3],
+  "mode": "Fillkey",
+  "newUrl": "https://new-url.com"
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Data Models -->
+        <section id="data-models" class="api-section">
+            <h2>Data Models</h2>
+
+            <h3>SimpleWebDecoderSettings</h3>
+            <p>Complete model for starting a web decoder:</p>
+            <pre><code>{
+  deviceIndex: number;        // 0-based device index
+  outputIndex: number;        // 0-based output port index
+  url: string;               // URL to decode
+  width: number;             // Video width (pixels, > 0)
+  height: number;            // Video height (pixels, > 0)
+  framerate: number;         // Framerate (fps, > 0)
+  interlacedOutput: boolean; // false = progressive, true = interlaced
+  enableKey: boolean;        // false = fill only, true = fill+key
+}</code></pre>
+
+            <h3>UpdateUrlRequest</h3>
+            <p>Model for updating a decoder's URL:</p>
+            <pre><code>{
+  url: string;  // New URL to navigate to
+}</code></pre>
+        </section>
+
+        <!-- Error Responses -->
+        <section id="errors" class="api-section">
+            <h2>Error Responses</h2>
+            <p>All error responses follow this format:</p>
+            <pre><code>{
+  "error": "Error category",
+  "message": "Detailed error message"
+}</code></pre>
+
+            <p>Or simplified:</p>
+            <pre><code>{
+  "message": "Error message"
+}</code></pre>
+
+            <h3>Common Error Scenarios</h3>
+
+            <h4>Invalid Device Index</h4>
+            <pre><code>{
+  "message": "Device index 5 out of range. Available devices: 0-2"
+}</code></pre>
+
+            <h4>Invalid Output Index</h4>
+            <pre><code>{
+  "message": "Output index 3 out of range. Available outputs on device 0: 0-1"
+}</code></pre>
+
+            <h4>Insufficient Ports for Fill+Key</h4>
+            <pre><code>{
+  "message": "Fill+Key output requires at least 2 available outputs, but only 1 available on device 0"
+}</code></pre>
+
+            <h4>No Active Decoders</h4>
+            <pre><code>{
+  "message": "No active web decoders found on device 0 (Blackmagic DeckLink 4K Extreme 12G)"
+}</code></pre>
+        </section>
+
+        <!-- Examples -->
+        <section id="examples" class="api-section">
+            <h2>Examples</h2>
+
+            <h3>Example 1: Start Simple Decoder (1080p50, Progressive)</h3>
+            <h4>Request:</h4>
+            <pre><code>POST /api/WebDecoder/simple/start
+Content-Type: application/json
+
+{
+  "deviceIndex": 0,
+  "outputIndex": 0,
+  "url": "https://example.com",
+  "width": 1920,
+  "height": 1080,
+  "framerate": 50.0,
+  "interlacedOutput": false,
+  "enableKey": false
+}</code></pre>
+
+            <h4>Response (200 OK):</h4>
+            <pre><code>{
+  "message": "WebDecoder started successfully",
+  "deviceIndex": 0,
+  "deviceId": "DeckLink_4K_Extreme_12G_00000000",
+  "deviceInfo": "Blackmagic DeckLink 4K Extreme 12G",
+  "outputIndex": 0,
+  "outputPorts": [2],
+  "mode": "Single",
+  "usedOutputs": 1,
+  "settings": {
+    "url": "https://example.com",
+    "resolution": "1920x1080",
+    "framerate": 50.0,
+    "interlaced": false,
+    "keyOutput": false
+  }
+}</code></pre>
+
+            <h3>Example 2: Start Fill+Key Decoder (1080i50)</h3>
+            <h4>Request:</h4>
+            <pre><code>POST /api/WebDecoder/simple/start
+Content-Type: application/json
+
+{
+  "deviceIndex": 0,
+  "outputIndex": 0,
+  "url": "https://graphics.example.com",
+  "width": 1920,
+  "height": 1080,
+  "framerate": 50.0,
+  "interlacedOutput": true,
+  "enableKey": true
+}</code></pre>
+
+            <h3>Example 3: Update URL While Running</h3>
+            <h4>Request:</h4>
+            <pre><code>POST /api/WebDecoder/simple/update-url/0/0
+Content-Type: application/json
+
+{
+  "url": "https://new-content.example.com"
+}</code></pre>
+
+            <h3>Example 4: Stop Decoder</h3>
+            <h4>Request:</h4>
+            <pre><code>POST /api/WebDecoder/simple/stop/0/0</code></pre>
+
+            <h3>Usage Workflow</h3>
+            <div class="note">
+                <h4>Typical Usage Pattern</h4>
+                <ol>
+                    <li><strong>Start a decoder:</strong> <code>POST /api/WebDecoder/simple/start</code></li>
+                    <li><strong>Change content dynamically (optional):</strong> <code>POST /api/WebDecoder/simple/update-url/{deviceIndex}/{outputIndex}</code></li>
+                    <li><strong>Stop the decoder:</strong> <code>POST /api/WebDecoder/simple/stop/{deviceIndex}/{outputIndex}</code></li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>Important:</strong> When stopping decoders, the <code>outputIndex</code> refers to active decoders (which are re-indexed after each stop operation).
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="api-section">
+            <h2>Best Practices</h2>
+            <ol>
+                <li><strong>Check error responses:</strong> Always handle 400, 404, and 500 status codes</li>
+                <li><strong>Validate parameters:</strong> Ensure width, height, and framerate are positive numbers</li>
+                <li><strong>URL format:</strong> Use fully qualified URLs with protocol (http:// or https://)</li>
+                <li><strong>Fill+Key requirements:</strong> Ensure at least 2 consecutive ports are available</li>
+                <li><strong>Interlaced output:</strong> Always uses Upper Field First (most common broadcast standard)</li>
+                <li><strong>Configuration persistence:</strong> Settings are automatically saved and restored on system restart</li>
+            </ol>
+        </section>
+
+        <!-- Footer Note -->
+        <section class="api-section">
+            <h2>Support</h2>
+            <p>For issues or questions about the API, please refer to the main SDIWare documentation or contact support.</p>
+            <p><strong>Version:</strong> 1.0<br>
+            <strong>Last Updated:</strong> 2025<br>
+            <strong>API Base Path:</strong> <code>/api/WebDecoder</code></p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: #2d3748; color: white; padding: 2rem 0; margin-top: 4rem; text-align: center;">
+        <div class="container">
+            <p>&copy; 2025 SDIWare. All rights reserved.</p>
+            <p><a href="index.html" style="color: #667eea;">Back to Home</a></p>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+</body>
+</html>

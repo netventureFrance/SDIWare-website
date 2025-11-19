@@ -8,6 +8,7 @@ const translations = {
             useCases: "Use Cases",
             partners: "Partners",
             download: "Download",
+            api: "API",
             impressum: "Impressum"
         },
         hero: {
@@ -162,6 +163,7 @@ const translations = {
             useCases: "Cas d'Usage",
             partners: "Partenaires",
             download: "Télécharger",
+            api: "API",
             impressum: "Mentions Légales"
         },
         hero: {
@@ -316,6 +318,7 @@ const translations = {
             useCases: "Anwendungsfälle",
             partners: "Partner",
             download: "Herunterladen",
+            api: "API",
             impressum: "Impressum"
         },
         hero: {
@@ -470,6 +473,7 @@ const translations = {
             useCases: "Casos de Uso",
             partners: "Socios",
             download: "Descargar",
+            api: "API",
             impressum: "Aviso Legal"
         },
         hero: {
@@ -624,6 +628,7 @@ const translations = {
             useCases: "Casi d'Uso",
             partners: "Partner",
             download: "Scarica",
+            api: "API",
             impressum: "Informazioni Legali"
         },
         hero: {
@@ -778,6 +783,7 @@ const translations = {
             useCases: "使用事例",
             partners: "パートナー",
             download: "ダウンロード",
+            api: "API",
             impressum: "会社情報"
         },
         hero: {
@@ -932,6 +938,7 @@ const translations = {
             useCases: "Käyttötapaukset",
             partners: "Kumppanit",
             download: "Lataa",
+            api: "API",
             impressum: "Yritystiedot"
         },
         hero: {
@@ -1086,6 +1093,7 @@ const translations = {
             useCases: "حالات الاستخدام",
             partners: "الشركاء",
             download: "تحميل",
+            api: "API",
             impressum: "معلومات الشركة"
         },
         hero: {
