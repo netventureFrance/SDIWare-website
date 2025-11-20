@@ -125,14 +125,11 @@ exports.handler = async (event, context) => {
     const currentVersion = await getCurrentVersion();
     console.log('Current version being downloaded:', currentVersion);
 
-    // Update status to Downloaded and track version
-    const updateFields = {
+    // Update status to Downloaded
+    await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, {
       Status: 'Downloaded',
-      'Last Downloaded Version': currentVersion,
-    };
-
-    await base(process.env.AIRTABLE_TABLE_NAME).update(record.id, updateFields);
-    console.log('Updated record with version:', currentVersion);
+    });
+    console.log('Updated record status to Downloaded, version:', currentVersion);
 
     // Return success page with auto-download
     return {
