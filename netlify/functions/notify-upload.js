@@ -271,11 +271,13 @@ To stop receiving update notifications, please reply to this email.
 // Save upload record to Upload History table
 async function saveUploadHistory(version, uploadedBy, sizeMB, changelog, newsletterCount, notifiedUsers) {
   try {
-    // Build recipients list
+    // Build recipients list (handle when no subscribers)
     let recipientsList = '';
-    notifiedUsers.forEach((user, index) => {
-      recipientsList += `${index + 1}. ${user.name} (${user.email}) - ${user.company}\n`;
-    });
+    if (notifiedUsers && notifiedUsers.length > 0) {
+      notifiedUsers.forEach((user, index) => {
+        recipientsList += `${index + 1}. ${user.name} (${user.email}) - ${user.company}\n`;
+      });
+    }
 
     const uploadDate = new Date().toISOString();
 
