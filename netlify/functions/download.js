@@ -146,10 +146,29 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Error processing download:', error);
+    console.error('Error stack:', error.stack);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+
+    // Provide more specific error messages
+    let errorMessage = 'An error occurred. Please try again later or contact support.';
+
+    if (error.name === 'NoSuchBucket') {
+      errorMessage = 'Storage configuration error. Please contact support. (Error: Bucket not found)';
+    } else if (error.name === 'NoSuchKey') {
+      errorMessage = 'File not found in storage. Please contact support. (Error: File not found)';
+    } else if (error.name === 'InvalidAccessKeyId' || error.name === 'SignatureDoesNotMatch') {
+      errorMessage = 'Storage authentication error. Please contact support. (Error: Invalid credentials)';
+    } else if (error.message && error.message.includes('Airtable')) {
+      errorMessage = 'Database connection error. Please contact support. (Error: Airtable)';
+    } else if (error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+      errorMessage = 'Network connection error. Please try again later. (Error: Network)';
+    }
+
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'text/html' },
-      body: generateErrorPage('An error occurred. Please try again later or contact support.'),
+      body: generateErrorPage(errorMessage),
     };
   }
 };
