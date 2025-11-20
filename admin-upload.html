@@ -256,7 +256,7 @@
             const version = document.getElementById('version').value;
             const uploadedBy = document.getElementById('uploadedBy').value;
             const changelog = document.getElementById('changelog').value;
-            const secret = document.getElementById('secret').value;
+            const secret = document.getElementById('secret').value.trim();
             const file = fileInput.files[0];
 
             if (!version || !uploadedBy || !changelog || !file || !secret) {
