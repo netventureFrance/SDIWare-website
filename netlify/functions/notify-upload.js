@@ -20,7 +20,7 @@ const r2Client = new S3Client({
   },
 });
 
-async function sendEmailViaSendGrid(subject, body) {
+async function sendEmailViaSendGrid(subject, textBody, htmlBody) {
   if (!SENDGRID_API_KEY) return;
 
   const sgMail = require('@sendgrid/mail');
@@ -28,9 +28,14 @@ async function sendEmailViaSendGrid(subject, body) {
 
   const msg = {
     to: NOTIFICATION_EMAIL,
-    from: NOTIFICATION_EMAIL,
+    from: {
+      email: 'info@sdiware.video',
+      name: 'SDIWare System'
+    },
+    replyTo: 'info@sdiware.video',
     subject: subject,
-    text: body,
+    text: textBody,
+    html: htmlBody,
     trackingSettings: {
       clickTracking: {
         enable: false,
@@ -311,34 +316,49 @@ async function sendSupportSummary(version, notifiedUsers) {
   const sgMail = require('@sendgrid/mail');
   sgMail.setApiKey(SENDGRID_API_KEY);
 
-  // Build user list
-  let userList = '';
+  // Build user list for text
+  let userListText = '';
   notifiedUsers.forEach((user, index) => {
-    userList += `${index + 1}. ${user.name}\n`;
-    userList += `   Email: ${user.email}\n`;
-    userList += `   Company: ${user.company}\n\n`;
+    userListText += `${index + 1}. ${user.name}\n`;
+    userListText += `   Email: ${user.email}\n`;
+    userListText += `   Company: ${user.company}\n\n`;
+  });
+
+  // Build user list for HTML
+  let userListHtml = '';
+  notifiedUsers.forEach((user, index) => {
+    userListHtml += `
+    <tr>
+      <td style="padding: 15px; border-bottom: 1px solid #e9ecef;">
+        <p style="margin: 0 0 5px 0; color: #333; font-size: 15px; font-weight: 600;">${index + 1}. ${user.name}</p>
+        <p style="margin: 0 0 3px 0; color: #666; font-size: 14px;">📧 ${user.email}</p>
+        <p style="margin: 0; color: #666; font-size: 14px;">🏢 ${user.company}</p>
+      </td>
+    </tr>`;
   });
 
   const subject = `📧 Newsletter Sent: v${version} - ${notifiedUsers.length} Users Notified`;
-  const body = `
-Newsletter Distribution Report
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Version: ${version}
-Total Recipients: ${notifiedUsers.length}
-Sent: ${new Date().toLocaleString('en-US', {
+  const sentDate = new Date().toLocaleString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
     timeZoneName: 'short'
-  })}
+  });
+
+  const textBody = `
+Newsletter Distribution Report
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Version: ${version}
+Total Recipients: ${notifiedUsers.length}
+Sent: ${sentDate}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 The following users have been notified about the new version:
 
-${userList}
+${userListText}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Each user received:
@@ -352,6 +372,73 @@ You can track downloads in Airtable under "Last Downloaded Version" field.
 This is an automated report from the SDIWare newsletter system.
   `.trim();
 
+  const htmlBody = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Distribution Report</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px;">
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #3d4f5c 0%, #2d3e4a 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">📧 Newsletter Report</h1>
+                            <p style="color: #00d4aa; margin: 10px 0 0 0; font-size: 18px;">v${version} Distribution</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #d4edda; border-left: 4px solid #28a745; border-radius: 4px; margin: 0 0 30px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 10px 0; color: #155724; font-size: 16px; font-weight: 600;">✓ Newsletter Distribution Complete</p>
+                                        <p style="margin: 0 0 5px 0; color: #155724; font-size: 14px;"><strong>Version:</strong> ${version}</p>
+                                        <p style="margin: 0 0 5px 0; color: #155724; font-size: 14px;"><strong>Total Recipients:</strong> ${notifiedUsers.length}</p>
+                                        <p style="margin: 0; color: #155724; font-size: 14px;"><strong>Sent:</strong> ${sentDate}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h2 style="color: #333; font-size: 20px; margin: 0 0 15px 0;">Notified Users</h2>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e9ecef; border-radius: 6px; overflow: hidden;">
+                              ${userListHtml}
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f9fa; border-radius: 6px; margin: 30px 0 0 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 10px 0; color: #333; font-size: 16px; font-weight: 600;">Each user received:</p>
+                                        <ul style="margin: 0; padding-left: 20px; color: #666; font-size: 14px; line-height: 1.8;">
+                                            <li>Direct download link (48-hour expiry)</li>
+                                            <li>Version number: ${version}</li>
+                                            <li>Fresh download token</li>
+                                        </ul>
+                                        <p style="margin: 20px 0 0 0; color: #666; font-size: 14px;">You can track downloads in Airtable under "Last Downloaded Version" field.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f8f9fa; padding: 20px 30px; text-align: center; border-radius: 0 0 8px 8px;">
+                            <p style="color: #999; font-size: 12px; margin: 0;">
+                                This is an automated report from the SDIWare newsletter system.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+  `.trim();
+
   const msg = {
     to: NOTIFICATION_EMAIL,
     from: {
@@ -360,7 +447,8 @@ This is an automated report from the SDIWare newsletter system.
     },
     replyTo: 'info@sdiware.video',
     subject: subject,
-    text: body,
+    text: textBody,
+    html: htmlBody,
     trackingSettings: {
       clickTracking: {
         enable: false,
@@ -461,7 +549,8 @@ exports.handler = async (event, context) => {
       });
 
       const subject = `🚀 New SDIWare Release: v${version}`;
-      const body = `
+
+      const textBody = `
 New SDIWare installer has been uploaded:
 
 Version: ${version}
@@ -476,7 +565,74 @@ The new version is now live at: https://sdiware.video
 This is an automated notification from the SDIWare upload system.
       `.trim();
 
-      await sendEmailViaSendGrid(subject, body);
+      const htmlBody = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New SDIWare Upload</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px;">
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #3d4f5c 0%, #2d3e4a 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">🚀 New Upload</h1>
+                            <p style="color: #00d4aa; margin: 10px 0 0 0; font-size: 18px;">SDIWare v${version}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">A new version of SDIWare has been successfully uploaded to production.</p>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f9fa; border-radius: 6px; margin: 30px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Version:</strong> ${version}</p>
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Uploaded By:</strong> ${uploadedBy}</p>
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Filename:</strong> ${filename}</p>
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Size:</strong> ${sizeMB} MB</p>
+                                        <p style="margin: 0; color: #666; font-size: 14px;"><strong style="color: #333;">Date:</strong> ${uploadDate}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="https://sdiware.video" style="display: inline-block; background-color: #00d4aa; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View SDIWare Website</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #d4edda; border-left: 4px solid #28a745; border-radius: 4px; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <p style="margin: 0; color: #155724; font-size: 14px;"><strong>✓ Upload Successful</strong><br>The new version is now live and available for download.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f8f9fa; padding: 20px 30px; text-align: center; border-radius: 0 0 8px 8px;">
+                            <p style="color: #999; font-size: 12px; margin: 0;">
+                                This is an automated notification from the SDIWare upload system.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+      `.trim();
+
+      await sendEmailViaSendGrid(subject, textBody, htmlBody);
     }
 
     // Send newsletter emails to all subscribers
