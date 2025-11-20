@@ -1,4 +1,10 @@
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const Airtable = require('airtable');
+
+// Configure Airtable
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
+  process.env.AIRTABLE_BASE_ID
+);
 
 // Simple authentication - set ADMIN_UPLOAD_SECRET in Netlify environment variables
 const UPLOAD_SECRET = process.env.ADMIN_UPLOAD_SECRET;
@@ -113,6 +119,40 @@ async function sendWebhookNotification(subject, body) {
   }
 }
 
+// Save upload record to Upload History table
+async function saveUploadHistory(version, uploadedBy, sizeMB, changelog) {
+  try {
+    const uploadDate = new Date().toISOString();
+
+    // Create record in Upload History table
+    await base('Upload History').create({
+      'Version': version,
+      'Uploaded By': uploadedBy,
+      'Upload Date': uploadDate,
+      'File Size (MB)': parseFloat(sizeMB),
+      'Changelog': changelog || 'No changelog provided',
+      'Newsletter Sent': false,
+      'Recipients Count': 0,
+      'Recipients List': '',
+    });
+
+    console.log('Upload history saved:', version);
+    return true;
+  } catch (error) {
+    console.error('Failed to save upload history:', error.message);
+    console.log('Note: Make sure "Upload History" table exists in Airtable with these fields:');
+    console.log('- Version (Single line text)');
+    console.log('- Uploaded By (Single line text)');
+    console.log('- Upload Date (Date & time)');
+    console.log('- File Size (MB) (Number)');
+    console.log('- Changelog (Long text)');
+    console.log('- Newsletter Sent (Checkbox)');
+    console.log('- Recipients Count (Number)');
+    console.log('- Recipients List (Long text)');
+    return false;
+  }
+}
+
 exports.handler = async (event, context) => {
   // CORS headers
   const headers = {
@@ -165,10 +205,11 @@ exports.handler = async (event, context) => {
     const buffer = Buffer.from(event.body, 'base64');
     const parts = parseMultipart(buffer, boundary);
 
-    // Extract password, version, and file
+    // Extract password, version, changelog, and file
     const secret = parts.find(p => p.name === 'secret')?.data.toString();
     const version = parts.find(p => p.name === 'version')?.data.toString() || 'unversioned';
     const uploadedBy = parts.find(p => p.name === 'uploadedBy')?.data.toString() || 'Unknown';
+    const changelog = parts.find(p => p.name === 'changelog')?.data.toString() || 'No changelog provided';
     const filepart = parts.find(p => p.name === 'installer');
 
     // Validate authentication
@@ -212,6 +253,14 @@ exports.handler = async (event, context) => {
     await r2Client.send(uploadCommand);
 
     console.log('Upload successful');
+
+    // Save upload history to Airtable (optional - won't fail if table doesn't exist)
+    try {
+      await saveUploadHistory(version, uploadedBy, sizeMB, changelog);
+    } catch (historyError) {
+      console.error('Failed to save upload history:', historyError);
+      // Continue anyway - upload was successful
+    }
 
     // Send notification email (if configured)
     await sendNotification({
