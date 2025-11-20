@@ -559,6 +559,9 @@ Filename: ${filename}
 Size: ${sizeMB} MB
 Date: ${uploadDate}
 
+What's New:
+${changelog}
+
 The new version is now live at: https://sdiware.video
 
 ---
@@ -599,6 +602,9 @@ This is an automated notification from the SDIWare upload system.
                                     </td>
                                 </tr>
                             </table>
+
+                            <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">✨ What's New</h2>
+                            <div style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 30px 0; white-space: pre-wrap; background-color: #f8f9fa; padding: 20px; border-radius: 6px; border-left: 4px solid #00d4aa;">${changelog}</div>
 
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                 <tr>
