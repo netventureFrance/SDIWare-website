@@ -51,8 +51,39 @@ async function getCurrentVersion() {
   }
 }
 
+// Get changelog from Upload History table for a specific version
+async function getChangelogForVersion(version) {
+  try {
+    const records = await base('Upload History')
+      .select({
+        filterByFormula: `{Version} = "${version}"`,
+        maxRecords: 1,
+        sort: [{ field: 'Upload Date', direction: 'desc' }]
+      })
+      .firstPage();
+
+    if (records && records.length > 0) {
+      return records[0].get('Changelog') || null;
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error fetching changelog from Upload History:', error);
+    return null;
+  }
+}
+
+// Default features list (fallback if no changelog in Upload History)
+const defaultFeatures = `✅ SDI/NDI/IP2110 conversion
+✅ 4K HDR 10-bit support
+✅ Alpha channel support
+✅ Multi-channel audio
+✅ Tally integration
+✅ Program & Preview feeds
+✅ CEF & WebRTC support`;
+
 // Send download email via SendGrid
-async function sendDownloadEmail({ fullName, email, version, downloadToken, useCase }) {
+async function sendDownloadEmail({ fullName, email, version, downloadToken, useCase, changelog }) {
   const downloadUrl = `https://sdiware.video/.netlify/functions/download/${downloadToken}`;
 
   const subject = `Your SDIWare v${version} Download is Ready! 🎉`;
@@ -89,13 +120,7 @@ Licensed To: ${fullName}
 ✨ What's Included in v${version}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ SDI/NDI/IP2110 conversion
-✅ 4K HDR 10-bit support
-✅ Alpha channel support
-✅ Multi-channel audio
-✅ Tally integration
-✅ Program & Preview feeds
-✅ CEF & WebRTC support
+${changelog}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💬 Need Help?
@@ -190,15 +215,7 @@ For support, please reply to this email or contact info@sdiware.video
 
                             <!-- Features -->
                             <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">✨ What's Included in v${version}</h2>
-                            <ul style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 20px 0; padding-left: 20px;">
-                                <li>SDI/NDI/IP2110 conversion</li>
-                                <li>4K HDR 10-bit support</li>
-                                <li>Alpha channel support</li>
-                                <li>Multi-channel audio</li>
-                                <li>Tally integration</li>
-                                <li>Program & Preview feeds</li>
-                                <li>CEF & WebRTC support</li>
-                            </ul>
+                            <div style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 20px 0; white-space: pre-wrap;">${changelog.replace(/\n/g, '<br>')}</div>
 
                             <!-- Support -->
                             <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">💬 Need Help?</h2>
@@ -336,6 +353,10 @@ exports.handler = async (event, context) => {
 
     console.log('Current version:', version);
 
+    // Get changelog from Upload History for this version
+    const changelog = await getChangelogForVersion(version) || defaultFeatures;
+    console.log('Using changelog:', changelog ? 'from Upload History' : 'default features');
+
     // Create record in Airtable
     const record = await base(process.env.AIRTABLE_TABLE_NAME).create({
       'Full Name': data.fullName,
@@ -364,6 +385,7 @@ exports.handler = async (event, context) => {
         version: version,
         downloadToken: downloadToken,
         useCase: data.useCase,
+        changelog: changelog,
       });
       console.log('Download email sent successfully to:', data.email);
     } catch (emailError) {
