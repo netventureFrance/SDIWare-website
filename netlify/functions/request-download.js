@@ -122,6 +122,123 @@ The download link expires 48 hours from receipt of this email.
 For support, please reply to this email or contact info@sdiware.video
   `.trim();
 
+  const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your SDIWare Download</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px;">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #3d4f5c 0%, #2d3e4a 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">SDIWare v${version}</h1>
+                            <p style="color: #00d4aa; margin: 10px 0 0 0; font-size: 16px;">Your Download is Ready!</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">Dear ${fullName},</p>
+                            <p style="color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">Thank you for choosing SDIWare! Your download link is now ready.</p>
+
+                            <!-- Download Button -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="${downloadUrl}" style="display: inline-block; background-color: #00d4aa; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 6px; font-size: 18px; font-weight: 600; box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);">Download SDIWare</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Details Box -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f9fa; border-radius: 6px; margin: 30px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Version:</strong> ${version}</p>
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Trial Period:</strong> 30 days (from activation)</p>
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Link Valid For:</strong> 48 hours</p>
+                                        <p style="margin: 0; color: #666; font-size: 14px;"><strong style="color: #333;">Licensed To:</strong> ${fullName}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Quick Start -->
+                            <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">🚀 Quick Start Guide</h2>
+                            <ol style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 20px 0; padding-left: 20px;">
+                                <li>Click the download button above</li>
+                                <li>Save the installer file (SDIWare-Installer.exe)</li>
+                                <li>Run the installer and follow the setup wizard</li>
+                                <li>Activate your 30-day trial when prompted</li>
+                            </ol>
+
+                            <!-- Warning -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <p style="margin: 0; color: #856404; font-size: 14px;"><strong>⚠️ IMPORTANT:</strong> Your download link expires in 48 hours from now. Please download the installer within this timeframe.</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Features -->
+                            <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">✨ What's Included in v${version}</h2>
+                            <ul style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 20px 0; padding-left: 20px;">
+                                <li>SDI/NDI/IP2110 conversion</li>
+                                <li>4K HDR 10-bit support</li>
+                                <li>Alpha channel support</li>
+                                <li>Multi-channel audio</li>
+                                <li>Tally integration</li>
+                                <li>Program & Preview feeds</li>
+                                <li>CEF & WebRTC support</li>
+                            </ul>
+
+                            <!-- Support -->
+                            <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">💬 Need Help?</h2>
+                            <p style="color: #666; font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;">
+                                <strong style="color: #333;">Email Support:</strong> <a href="mailto:info@sdiware.video" style="color: #00d4aa; text-decoration: none;">info@sdiware.video</a>
+                            </p>
+                            <p style="color: #666; font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;">
+                                <strong style="color: #333;">Website:</strong> <a href="https://sdiware.video" style="color: #00d4aa; text-decoration: none;">sdiware.video</a>
+                            </p>
+                            <p style="color: #666; font-size: 15px; line-height: 1.6; margin: 0;">
+                                <strong style="color: #333;">Your Use Case:</strong> ${useCase}
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-radius: 0 0 8px 8px;">
+                            <p style="color: #333; font-size: 15px; margin: 0 0 10px 0;">Best regards,<br><strong>The SDIWare Team</strong></p>
+                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 20px 0 0 0;">
+                                netventure r&d SRL<br>
+                                Via della Consolata 1bis<br>
+                                I-10122 Torino, Italia
+                            </p>
+                            <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+                            <p style="color: #999; font-size: 12px; line-height: 1.6; margin: 0;">
+                                This is an automated email. Your 30-day trial begins when you activate the software.<br>
+                                The download link expires 48 hours from receipt of this email.<br>
+                                For support, please reply to this email or contact info@sdiware.video
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+  `.trim();
+
   const msg = {
     to: email,
     from: {
@@ -131,6 +248,7 @@ For support, please reply to this email or contact info@sdiware.video
     replyTo: 'info@sdiware.video',
     subject: subject,
     text: textContent,
+    html: htmlContent,
     trackingSettings: {
       clickTracking: {
         enable: false,
