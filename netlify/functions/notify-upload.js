@@ -102,7 +102,8 @@ async function sendNewsletterEmails(version, sizeMB, changelog) {
       const downloadUrl = `https://sdiware.video/.netlify/functions/download/${downloadToken}`;
 
       const subject = `🎉 New SDIWare Version Available: v${version}`;
-      const body = `
+
+      const textBody = `
 Dear ${fullName},
 
 Great news! A new version of SDIWare is now available.
@@ -142,6 +143,83 @@ I-10122 Torino, Italia
 To stop receiving update notifications, please reply to this email.
       `.trim();
 
+      const htmlBody = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New SDIWare Version</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px;">
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #3d4f5c 0%, #2d3e4a 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">🎉 New Version Available</h1>
+                            <p style="color: #00d4aa; margin: 10px 0 0 0; font-size: 18px;">SDIWare v${version}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">Dear ${fullName},</p>
+                            <p style="color: #333; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">Great news! A new version of SDIWare is now available for download.</p>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f9fa; border-radius: 6px; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;"><strong style="color: #333;">Version:</strong> ${version}</p>
+                                        <p style="margin: 0; color: #666; font-size: 14px;"><strong style="color: #333;">Size:</strong> ${sizeMB} MB</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="${downloadUrl}" style="display: inline-block; background-color: #00d4aa; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 6px; font-size: 18px; font-weight: 600; box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);">Download Now</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <p style="margin: 0; color: #856404; font-size: 14px;">⚠️ This download link expires in 48 hours.</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h2 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">✨ What's New in v${version}</h2>
+                            <div style="color: #666; font-size: 15px; line-height: 1.8; margin: 0 0 20px 0; white-space: pre-wrap; background-color: #f8f9fa; padding: 20px; border-radius: 6px; border-left: 4px solid #00d4aa;">${changelog}</div>
+
+                            <p style="color: #666; font-size: 14px; line-height: 1.6; margin: 30px 0 20px 0;">Your 30-day trial continues - this is just an update to the latest version.</p>
+
+                            <p style="color: #666; font-size: 14px; line-height: 1.6; margin: 0;">If you have any questions, contact us at <a href="mailto:info@sdiware.video" style="color: #00d4aa; text-decoration: none;">info@sdiware.video</a></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-radius: 0 0 8px 8px;">
+                            <p style="color: #333; font-size: 15px; margin: 0 0 10px 0;">Best regards,<br><strong>The SDIWare Team</strong></p>
+                            <p style="color: #666; font-size: 13px; line-height: 1.6; margin: 20px 0 0 0;">
+                                netventure r&d SRL<br>
+                                Via della Consolata 1bis<br>
+                                I-10122 Torino, Italia
+                            </p>
+                            <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+                            <p style="color: #999; font-size: 12px; margin: 0;">To stop receiving update notifications, please reply to this email.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+      `.trim();
+
       const msg = {
         to: email,
         from: {
@@ -150,7 +228,8 @@ To stop receiving update notifications, please reply to this email.
         },
         replyTo: 'info@sdiware.video',
         subject: subject,
-        text: body,
+        text: textBody,
+        html: htmlBody,
         trackingSettings: {
           clickTracking: {
             enable: false,
