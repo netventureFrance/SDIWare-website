@@ -1394,6 +1394,161 @@ const translations = {
             disclaimer: "Ansvarsfraskrivelse",
             disclaimer_text: "Innholdet på dette nettstedet er opprettet med største mulig omhu. Vi kan imidlertid ikke garantere nøyaktigheten, fullstendigheten og aktualiteten til innholdet."
         }
+    },
+    sv: {
+        nav: {
+            home: "Hem",
+            features: "Funktioner",
+            contact: "Kontakt",
+            useCases: "Användningsområden",
+            partners: "Partners",
+            download: "Ladda ner",
+            api: "API",
+            impressum: "Impressum"
+        },
+        hero: {
+            titlePrefix: "Professionell",
+            titleSuffix: "Konvertering",
+            subtitle: "Avancerad mjukvarulösning för sömlös konvertering mellan SDI- och NDI-format",
+            feature1: "Minimal fördröjning",
+            feature2: "10-bit HDR",
+            feature3: "Alfakanal",
+            feature4: "Flerkanals audio",
+            feature5: "Intercom",
+            cta1: "Ladda ner",
+            cta2: "Läs mer"
+        },
+        formats: {
+            sdi: "SDI",
+            ndi: "NDI",
+            ip2110: "2110 IP",
+            webrtc: "WebRTC",
+            srt: "SRT",
+            cef: "CEF"
+        },
+        features: {
+            title: "Huvudfunktioner",
+            latency: {
+                title: "Ultralåg fördröjning",
+                desc: "Realtidskonvertering med minimal fördröjning, perfekt för live-produktionsmiljöer"
+            },
+            alpha: {
+                title: "Alfakanal-stöd",
+                desc: "Fullt transparensstöd för professionella grafik- och overlay-arbetsflöden"
+            },
+            hdr: {
+                title: "10-bit HDR",
+                desc: "High Dynamic Range med 10-bitars färgdjup för överlägsen bildkvalitet"
+            },
+            audio: {
+                title: "Flerkanals audio",
+                desc: "Omfattande ljudstöd för komplexa broadcast-scenarier"
+            },
+            tally: {
+                title: "Tally-integration",
+                desc: "Inbyggda tally-funktioner för sömlös integration av produktionsarbetsflödet"
+            },
+            preview: {
+                title: "Program & förhandsgranskning",
+                desc: "Dubbel signalhantering för både program- och förhandsgranskningsflöden"
+            },
+            cef_webrtc: {
+                title: "CEF & WebRTC",
+                desc: "Avkoda vilken Chromium Embedded Framework HTML-renderare eller webbplats som helst till en live-sändningssignal (fill & key). Skicka videoinmatning tillbaka till HTML-renderaren via WebRTC"
+            }
+        },
+        useCases: {
+            title: "Användningsområden",
+            subtitle: "SDIWare anpassar sig till din produktionsmiljö",
+            studio: {
+                title: "Live studioproduktion",
+                desc1: "SDI-Ware förvandlar webbaserade grafikmotorer som SPX till broadcast-klara system. Konvertera HTML5-grafik till SDI/NDI/2110-utgång med professionella funktioner inklusive tally-stöd, intercom och return video feed—allt genom ett intuitivt webbgränssnitt. Fullständigt 4K HDR-stöd för nästa generations produktionsstandarder.",
+                desc2: "Distribuera HTML5-grafikmotorer direkt i multi-kamera studiomiljöer med full broadcast-integration. SDI-Ware tillhandahåller on-screen tally, extern tally-ljuskontroll och return video feed (RET) så att kameraoperatörer ser programutmatningen i sina sökare.",
+                desc3: "Kombinera SDI fill- och key-signaler till en enda NDI-ström med alfakanal-stöd. Utgång via traditionell SDI, NDI eller SMPTE ST 2110 för IP-baserade anläggningar. Inbyggt 4K HDR-arbetsflödesstöd säkerställer att din grafik matchar kvaliteten hos moderna kamerasystem."
+            },
+            broadcast: {
+                title: "Utomhusproduktion",
+                desc1: "Ersätt rack med specialiserad utrustning med kompakta, mjukvarubaserade lösningar. Montera en enkortsdator bakom kamerasökaren för ett komplett on-camera grafik- och kodningssystem—exakt som bevisat under 174 timmars live-produktion vid ISU Grand Prix konståkning.",
+                desc2: "Hårdvaruoberoende design stöder BMD Decklink, Magewell och andra capture-kort. Inbyggd intercom med tryck-för-att-tala, extern tally via Arduino-gränssnitt och nätverkskonfiguration genom webb-UI:t innebär snabbare installation och färre kablar i fält. 4K HDR-utgång säkerställer framtidssäkra produktioner."
+            },
+            corporate: {
+                title: "Live företagsevenemang",
+                desc1: "Ta broadcast-kvalitetsproduktion till företagskommunikation utan att kräva broadcast-expertis. Personalträffar, produktlanseringar, investerarpresentationer och utbildningssessioner får professionell finish genom HTML5-grafik som dina webbutvecklare kan skapa och modifiera i realtid. Inga specialiserade grafikoperatörer behövs—kontrollera allt genom välbekanta webbgränssnitt.",
+                desc2: "Drivs av branschledare: SDI-Ware är integrerat i <a href=\"https://mmgaxis.io\" target=\"_blank\" rel=\"noopener noreferrer\">mmagaxis.io</a> hårdvarulösningar, som är betrodda av företag världen över för företagsevenemangproduktion. Detta partnerskap kombinerar mmagaxis.io:s specialbyggda plattformar för företagsevenemang med SDI-Ware:s flexibla grafik-till-broadcast-konvertering, vilket ger nyckelfärdiga lösningar för professionella kommunikationsteam.",
+                desc3: "SpeedHQ-kodning säkerställer låg fördröjning för live-interaktion, medan NDI- eller ST 2110-utgång integrerar sömlöst med moderna produktionsmixrar och streamingplattformar. Fullständigt 4K HDR-stöd ger premium visuell kvalitet för presentationer på ledningsnivå. Distribuera på mmagaxis.io-hårdvara för validerade, produktionsklara system, eller integrera SDI-Ware i din befintliga infrastruktur."
+            },
+            remote: {
+                title: "Fjärr- och molnproduktion",
+                desc1: "Möjliggör distribuerade arbetsflöden där grafik, kameror och kontrollrum finns på olika platser. Kör SDI-Ware på molnservrar eller fjärrarbetsstationer, med NDI- eller SMPTE ST 2110-transport som eliminerar behovet av dedikerad videoinfrastruktur.",
+                desc2: "Konfigurera alla inställningar—NDI-strömmar, 2110-flöden, nätverksparametrar, audio-routing, PiP-positionering—genom webbgränssnittet utan att röra hårdvaran. Kompatibel med NDI Bridge för att köra flera instanser på samma maskin.",
+                desc3: "Perfekt för hemstudios, produktioner på flera platser eller hybridarbetsflöden som kombinerar lokala och molnresurser. Skala från HD till 4K HDR när bandbredd och krav utvecklas."
+            }
+        },
+        partners: {
+            title: "Teknikpartners",
+            subtitle: "Pålitliga integrationer med branschledande plattformar"
+        },
+        download: {
+            title: "Ladda ner SDIWare",
+            subtitle: "Begär din 30-dagars testversion (nedladdningslänken giltig i 48 timmar)",
+            pdfTitle: "Produktinformation",
+            pdfDesc: "Ladda ner vår detaljerade presentation för att lära dig mer om SDIWare-funktioner och specifikationer",
+            pdfButton: "Ladda ner PDF",
+            form: {
+                name: "Fullständigt namn",
+                email: "E-postadress",
+                company: "Företagsnamn",
+                role: "Din roll",
+                useCase: "Avsett användningsområde",
+                selectOption: "-- Välj ett alternativ --",
+                liveStudio: "Live studioproduktion",
+                obVan: "Utomhussändning / OB-bil",
+                corporateEvents: "Företagsevenemang",
+                remoteProduction: "Fjärr-/molnproduktion",
+                other: "Annat",
+                gdprConsent: "Jag samtycker till behandlingen av mina personuppgifter och accepterar integritetspolicyn",
+                newsletter: "Jag vill gärna få uppdateringar om SDIWare (valfritt)",
+                submit: "Begär nedladdningslänk"
+            },
+            info: {
+                trial: {
+                    title: "30-dagars testversion",
+                    desc: "Fullt fungerande testversion utan begränsningar. Perfekt för testning i din produktionsmiljö."
+                },
+                instant: {
+                    title: "Omedelbar åtkomst",
+                    desc: "Ta emot din nedladdningslänk via e-post inom några minuter. Inget kreditkort krävs."
+                },
+                support: {
+                    title: "Support ingår",
+                    desc: "Få teknisk support under din testperiod för att säkerställa smidig installation och drift."
+                }
+            }
+        },
+        contact: {
+            title: "Kontakta oss",
+            text: "Intresserad av SDIWare? Kontakta oss för licensiering, support eller mer information."
+        },
+        impressum: {
+            title: "Impressum",
+            company: "Företagsinformation",
+            legal_form: "Aktiebolag med begränsat ansvar",
+            managing_director: "Verkställande direktör",
+            registered_office: "Registrerat kontor",
+            contact_heading: "Kontakt",
+            email_label: "E-post",
+            web_label: "Webbplats",
+            legal: "Juridisk information",
+            vat: "Momsnummer / P.IVA",
+            rea: "REA-nummer",
+            share_capital: "Aktiekapital",
+            paid_in: "fullt inbetalt",
+            single_shareholder: "Enaktieägarbolag",
+            yes_no: "[Ja/Nej]",
+            no: "Nej",
+            disclaimer: "Ansvarsfriskrivning",
+            disclaimer_text: "Innehållet på denna webbplats har skapats med största möjliga omsorg. Vi kan dock inte garantera riktigheten, fullständigheten och aktualiteten i innehållet."
+        }
     }
 };
 
